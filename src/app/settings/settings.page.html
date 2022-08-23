@@ -1,0 +1,112 @@
+<ion-header>
+  <ion-title>Configuraciones</ion-title>
+</ion-header>
+
+<ion-content class="back">
+  <ion-row>
+    <ion-col size="12" class="col hidden"><br></ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="1" class="col"></ion-col>
+    <ion-col size="10" class="no_padding ">
+      <ion-card class="info">
+        <ion-row>
+          <!-- CONFIGURATION TITLE -->
+          <ion-col size="1" size-lg class="hidden"></ion-col>
+          <ion-col size="7" size-lg>
+            <h6>Clave de configuración</h6>
+          </ion-col>
+          <ion-col size="1.5" size-lg>
+            <ion-icon [hidden]="viewKey" (click)="showKey()" class="center-element icon" name="chevron-up-outline">
+            </ion-icon>
+            <ion-icon [hidden]="!viewKey" (click)="showKey()" class="center-element icon" name="chevron-down-outline">
+            </ion-icon>
+          </ion-col>
+          <ion-col size="1.5" size-lg>
+            <ion-icon class="center-element icon" (click)="showInfo()" name="help-circle-outline"></ion-icon>
+          </ion-col>
+          <ion-col size="1" size-lg class="hidden"></ion-col>
+        </ion-row>
+        <ion-row>
+
+          <!-- KEY CONFIG -->
+          <ion-col size="1" size-lg [hidden]="viewKey" class="hidden"></ion-col>
+          <ion-col size="10" size-lg class="center back-info" [hidden]="viewKey">
+            <p> {{uid}} </p>
+          </ion-col>
+          <ion-col size="1" size-lg [hidden]="viewKey" class="hidden"></ion-col>
+        </ion-row>
+        <ion-row>
+          <!-- INFO -->
+          <ion-col size="1" size-lg [hidden]="viewInfo" class="hidden"></ion-col>
+          <ion-col size="10" size-lg class="center back-info" [hidden]="viewInfo" (click)="showInfo()">
+            <p style="text-align: justify;"> Esta clave de configuración debe ser ingresada en el dispositivo nuevo a
+              vincular, muéstresela a su técnico de configuración únicamente. </p>
+          </ion-col>
+          <ion-col size="1" size-lg [hidden]="viewInfo" class="hidden"></ion-col>
+        </ion-row>
+        <ion-row>
+          <!-- DEVICES TITLE -->
+          <ion-col size="1" size-lg class="hidden"></ion-col>
+          <ion-col size="8.5" size-lg>
+            <h5>Mis dispositivos</h5>
+          </ion-col>
+          <ion-col size="1.5" size-lg>
+            <ion-icon (click)="showAddDevice()" class="center-element icon" name="add-outline"></ion-icon>
+          </ion-col>
+          <ion-col size="1" size-lg class="hidden"></ion-col>
+        </ion-row>
+        <ion-row>
+          <!-- DEVICES LIST -->
+          <ion-col size="1" size-lg class="hidden"></ion-col>
+          <ion-col class="scroll medium" size="10" size-lg>
+            <ion-row *ngFor="let item of nodosList ; index as i">
+              <ion-col size="12">
+                <ion-item button (click)="expandInfo(i)">
+                  <ion-icon slot="start" class="connect" [ngClass]="{'error' : !item.isActive}" name="radio-outline">
+                  </ion-icon>
+                  <ion-label> {{item.nombre}}</ion-label>
+                  <ion-icon slot="end" class="connect" [ngClass]="{'error' : !disconect[i]}" name="globe-outline">
+                  </ion-icon>
+                </ion-item>
+              </ion-col>
+              <ion-col *ngIf="expanded[i]" size="12" size-lg>
+                <ion-item style="padding-left: 2%; padding-right: 2%;">
+                  <p> Última actualización el {{item.lastDate || '00/00/00'}}, a las {{item.lasthour || '00:00'}}
+                  </p>
+
+                  <ion-icon slot="end" class="error show" name="power-outline"></ion-icon>
+                  <ion-toggle slot="end" class="show" (ionChange)="changeStatus(item, 'show')"
+                    [(ngModel)]="item.isActive">
+                  </ion-toggle>
+                  <ion-icon slot="end" class="connect show" name="power-outline"></ion-icon>
+
+                </ion-item>
+                <ion-item style="padding-left: 2%; padding-right: 2%;">
+                  <p>
+                    KeyDevice: <br> {{item.key}}
+                  </p>
+                </ion-item>
+
+                <ion-item class="data" style="padding-left: 2%; padding-right: 2%;">
+                  <ion-icon slot="end" class="error" name="power-outline"></ion-icon>
+                  <ion-toggle slot="end" class="data" (ionChange)="changeStatus(item,  'data')"
+                    [(ngModel)]="item.isActive">
+                  </ion-toggle>
+                  <ion-icon slot="end" class="connect" name="power-outline"></ion-icon>
+                </ion-item>
+              </ion-col>
+
+            </ion-row>
+          </ion-col>
+          <ion-col size="1" size-lg class="hidden"></ion-col>
+        </ion-row>
+        <ion-refresher style="background: transparent;" slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200"
+          (ionRefresh)="doRefresh($event)">
+          <ion-refresher-content style="background: transparent;"></ion-refresher-content>
+        </ion-refresher>
+      </ion-card>
+    </ion-col>
+    <ion-col size="1" class="col"></ion-col>
+  </ion-row>
+</ion-content>

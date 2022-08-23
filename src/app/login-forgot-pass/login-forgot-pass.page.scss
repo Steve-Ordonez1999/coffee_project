@@ -1,0 +1,49 @@
+@import url("../app.component.scss");
+
+.sqare {
+    //border: 1px brown solid;
+    border-top: 1.5px brown solid;
+    border-left: 1.5px brown solid;
+    border-bottom: 3px white solid;
+    border-right: 2px white solid;
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+    padding: 5%;
+}
+
+.cup {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.inputs {
+    margin-bottom: 3%;
+    border-radius: 100px;
+    background: white;
+    //color: rgba(208, 181, 100, 1);
+    color: black;
+    --placeholder-color: rgba(208, 181, 100, 1) !important;
+}
+
+.forgot {
+    margin: 0%;
+    font-size: 0.85rem;
+}
+
+.divider {
+    height: 50%;
+    border-bottom: 1px green solid;
+}
+
+.login {
+    --background: var(--ion-color-coffeGreen);
+}
+
+h6 {
+    color: white;
+}

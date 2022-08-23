@@ -1,0 +1,15 @@
+@import url("../../app.component.scss");
+
+.icon {
+    position: relative;
+
+    width: 85%;
+    height: 85%;
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+}
+
+ion-input{
+    color: black;
+}

@@ -1,0 +1,271 @@
+<ion-header>
+  <ion-title>Perfil</ion-title>
+</ion-header>
+
+<ion-content class="back">
+  <div class="scroll">
+    <ion-row class="hidden">
+      <ion-col class="hidden" size="12"><br></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="3.5"></ion-col>
+      <ion-col size="5" style="min-height: 180px;">
+        <div class="circle-profile center-element">
+          <img *ngIf="infoUser.photoURL" class="circle-profile center-element" src="{{infoUser.photoURL}}"
+            alt="Foto de perfil" (click)="openModalPhoto()">
+          <img *ngIf="!infoUser.photoURL" class="circle-profile center-element" src="../../assets/perfil/userPerfil.png"
+            alt="Foto de perfil">
+          <div class="inner" [hidden]="isDesck">
+            <ion-icon class="icon" (click)="menuCamara()" name="camera-outline"></ion-icon>
+            <!--<ion-icon class="icon" [hidden]="!isSelected" (click)="update()" name="cloud-upload-outline"></ion-icon>-->
+          </div>
+        </div>
+      </ion-col>
+      <ion-col size="3.5"></ion-col>
+    </ion-row>
+
+    <!-- NICKNAME -->
+    <ion-row class="data">
+      <ion-col size="1"></ion-col>
+      <ion-col size="10" class="no_padding">
+        <ion-row class="inputs">
+          <ion-col size="1.5">
+            <ion-icon class="center-element icon" name="person"></ion-icon>
+          </ion-col>
+          <ion-col size="7.5">
+            <ion-input id="user" name="user" required [(ngModel)]="infoUser.displayName" placeholder="Ingrese su apodo"
+              [disabled]="!isEdit">
+            </ion-input>
+          </ion-col>
+          <ion-col size="1.5" class="line-right line-left">
+            <ion-icon [hidden]="isEdit" class="center-element icon" name="pencil-outline" (click)="edit()">
+            </ion-icon>
+            <ion-icon [hidden]="!isEdit" class="center-element icon inactive" name="pencil-outline" (click)="edit()">
+            </ion-icon>
+          </ion-col>
+          <ion-col size="1.5" class="">
+            <ion-icon class="center-element icon" name="cloud-upload-outline" (click)="update()"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+    <!-- NICKNAME -->
+    <ion-row class="show">
+      <ion-col size="4"></ion-col>
+      <ion-col size="4" class="no_padding">
+        <ion-row class="inputs">
+          <ion-col size="1.5">
+            <ion-icon class="center-element icon" name="person"></ion-icon>
+          </ion-col>
+          <ion-col size="7.5">
+            <ion-input id="user" name="user" required [(ngModel)]="infoUser.displayName" placeholder="Ingrese su apodo"
+              [disabled]="!isEdit">
+            </ion-input>
+          </ion-col>
+          <ion-col size="1.5" class="line-right line-left">
+            <ion-icon [hidden]="isEdit" class="center-element icon" name="pencil-outline" (click)="edit()">
+            </ion-icon>
+            <ion-icon [hidden]="!isEdit" class="center-element icon inactive" name="pencil-outline" (click)="edit()">
+            </ion-icon>
+          </ion-col>
+          <ion-col size="1.5" class="">
+            <ion-icon class="center-element icon" name="cloud-upload-outline" (click)="update()"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="4"></ion-col>
+    </ion-row>
+
+    <!-- CORREO -->
+    <ion-row class="data">
+      <ion-col size="1"></ion-col>
+      <ion-col size="10" class="no_padding ">
+        <ion-row class="inputs">
+          <ion-col size="1.5">
+            <ion-icon class="center-element icon" name="mail-outline"></ion-icon>
+          </ion-col>
+          <ion-col size="10.5">
+            <ion-input id="correo" name="correo" required [(ngModel)]="infoUser.email" disabled>
+            </ion-input>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+    <!-- CORREO -->
+    <ion-row class="show">
+      <ion-col size="4"></ion-col>
+      <ion-col size="4" class="no_padding ">
+        <ion-row class="inputs">
+          <ion-col size="1.5">
+            <ion-icon class="center-element icon" name="mail-outline"></ion-icon>
+          </ion-col>
+          <ion-col size="10.5">
+            <ion-input id="correo" name="correo" required [(ngModel)]="infoUser.email" disabled>
+            </ion-input>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="4"></ion-col>
+    </ion-row>
+
+    <!-- TELEFONO -->
+    <ion-row class="data">
+      <ion-col size="1"></ion-col>
+      <ion-col size="10" class="no_padding ">
+        <ion-row class="inputs">
+          <ion-col size="1.5">
+            <ion-icon class="center-element icon" name="call-outline"></ion-icon>
+          </ion-col>
+          <ion-col size="10.5">
+            <ion-input style="--placeholder-color: black;" placeholder="+593xxxxxxxxx" id="telf" name="telf" required
+              [(ngModel)]="infoUser.telf" [disabled]="!isEdit">
+            </ion-input>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+    <!-- TELEFONO -->
+    <ion-row class="show">
+      <ion-col size="4"></ion-col>
+      <ion-col size="4" class="no_padding ">
+        <ion-row class="inputs">
+          <ion-col size="1.5">
+            <ion-icon class="center-element icon" name="call-outline"></ion-icon>
+          </ion-col>
+          <ion-col size="10.5">
+            <ion-input style="--placeholder-color: black;" placeholder="+593xxxxxxxxx" id="telf" name="telf" required
+              [(ngModel)]="infoUser.telf" [disabled]="!isEdit">
+            </ion-input>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="4"></ion-col>
+    </ion-row>
+
+    <!-- FECHA DE NACIMIENTO -->
+    <ion-row class="data">
+      <ion-col size="1"></ion-col>
+      <ion-col size="10" class="no_padding ">
+        <ion-row class="inputs">
+          <ion-col size="1.5">
+            <ion-icon class="center-element icon" name="calendar-outline"></ion-icon>
+          </ion-col>
+          <ion-col size="10.5">
+            <ion-input style="--placeholder-color: black;" placeholder="" id="telf" name="telf" required
+              [(ngModel)]="infoUser.fechaNacimiento" [disabled]="!isEdit" (click)="showDatePick()">
+            </ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-datetime #datetime (ionCancel)="hiddenPick()" (ionChange)="selectDate(datetime.value)" presentation="date"
+          [(ngModel)]="fechaNacimiento" [hidden]="!showCalendar" class="float">
+          <ion-buttons slot="buttons">
+            <!--  <ion-button color="danger" (click)="datetime.reset()">Reset</ion-button> -->
+            <ion-button color="primary" (click)="datetime.confirm()">Aceptar</ion-button>
+            <ion-button color="primary" (click)="datetime.cancel()">Cancelar</ion-button>
+          </ion-buttons>
+        </ion-datetime>
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+    <!-- FECHA DE NACIMIENTO -->
+    <ion-row class="show">
+      <ion-col size="4"></ion-col>
+      <ion-col size="4" class="no_padding ">
+        <ion-row class="inputs">
+          <ion-col size="1.5">
+            <ion-icon class="center-element icon" name="calendar-outline"></ion-icon>
+          </ion-col>
+          <ion-col size="10.5">
+            <ion-input style="--placeholder-color: black;" placeholder="" id="telf" name="telf" required
+              [(ngModel)]="infoUser.fechaNacimiento" [disabled]="!isEdit" (click)="showDatePick()">
+            </ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-datetime #datetime (ionChange)="selectDate(datetime.value)" presentation="date"
+          [(ngModel)]="fechaNacimiento" [hidden]="!showCalendar" class="float">
+          <ion-buttons slot="buttons">
+            <!--  <ion-button color="danger" (click)="datetime.reset()">Reset</ion-button> -->
+            <ion-button color="primary" (click)="datetime.confirm()">Aceptar</ion-button>
+            <ion-button color="primary" (click)="datetime.cancel()">Cancelar</ion-button>
+          </ion-buttons>
+        </ion-datetime>
+      </ion-col>
+      <ion-col size="4"></ion-col>
+    </ion-row>
+
+    <ion-row class="data">
+      <ion-col size="1"></ion-col>
+      <ion-col class="" size="10" size-lg>
+        <ion-button color="danger" shape="round" (click)="logout()" class="register bold" expand="block">CERRAR
+          SESIÓN
+        </ion-button>
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+
+    <ion-row class="show">
+      <ion-col size="4"></ion-col>
+      <ion-col class="" size="4" size-lg>
+        <ion-button color="danger" shape="round" (click)="logout()" class="register bold" expand="block">
+          CERRAR SESIÓN
+        </ion-button>
+      </ion-col>
+      <ion-col size="4"></ion-col>
+    </ion-row>
+
+    <ion-row class="data">
+      <ion-col size="1"></ion-col>
+      <ion-col class="" size="10" size-lg>
+        <ion-row class="inputs">
+          <ion-col size="1.5">
+            <ion-icon class="center-element icon" name="time-outline"></ion-icon>
+          </ion-col>
+          <ion-col size="10.5">
+            La sesión caduca en {{minutes}} minutos.
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+
+    <ion-row class="show">
+      <ion-col size="4"></ion-col>
+      <ion-col size="4" class="no_padding ">
+        <ion-row class="inputs">
+          <ion-col size="1.5">
+            <ion-icon class="center-element icon" name="time-outline"></ion-icon>
+          </ion-col>
+          <ion-col size="10.5">
+            La sesión caduca en {{minutes}} minutos.
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="4"></ion-col>
+    </ion-row>
+
+    <ion-row class="data">
+      <ion-col size="1"></ion-col>
+      <ion-col class="" size="10" size-lg>
+        <ion-button color="success" shape="round" [disabled]="minutes>5" (click)="renoveSession()" class="register bold"
+          expand="block">
+          RENOVAR SESIÓN
+        </ion-button>
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+
+    <ion-row class="show">
+      <ion-col size="4"></ion-col>
+      <ion-col class="" size="4" size-lg>
+        <ion-button color="success" shape="round" [disabled]="minutes>5" (click)="renoveSession()" class="register bold"
+          expand="block">
+          RENOVAR SESIÓN
+        </ion-button>
+      </ion-col>
+      <ion-col size="4"></ion-col>
+    </ion-row>
+  </div>
+</ion-content>

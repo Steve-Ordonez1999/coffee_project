@@ -1,0 +1,78 @@
+<ion-grid style="margin: 0%;">
+  <ion-row>
+    <ion-col size="8"><br></ion-col>
+    <ion-col size="4" class="no_padding" (click)="close()">
+      <ion-icon class="center-element icon" name="close-outline"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="1"></ion-col>
+    <ion-col size="10">
+      <h4>Ingrese el nombre de su dispositivo</h4>
+    </ion-col>
+    <ion-col size="1"></ion-col>
+  </ion-row>
+  <!-- NICKNAME -->
+  <ion-row>
+    <ion-col size="1"></ion-col>
+    <ion-col size="10" class="no_padding ">
+      <ion-row class="inputs">
+        <ion-col size="1.5">
+          <ion-icon class="center-element icon" name="radio-outline"></ion-icon>
+        </ion-col>
+        <ion-col size="10">
+          <ion-input id="nombre" name="nombre" required [(ngModel)]="infoDevice.nombre" placeholder="Ingrese el nombre">
+          </ion-input>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size="1"></ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="1"></ion-col>
+    <ion-col size="10">
+      <h5>Datos de creación</h5>
+    </ion-col>
+    <ion-col size="1"></ion-col>
+  </ion-row>
+  <!-- FECHA -->
+  <ion-row>
+    <ion-col size="1"></ion-col>
+    <ion-col size="10" class="no_padding ">
+      <ion-row class="inputs">
+        <ion-col size="1.5">
+          <ion-icon class="center-element icon" name="calendar-outline"></ion-icon>
+        </ion-col>
+        <ion-col size="10.5">
+          <ion-input id="fecha" name="fecha" required readonly>{{infoDevice.createDate}}
+          </ion-input>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size="1"></ion-col>
+  </ion-row>
+  <!-- HORA -->
+  <ion-row>
+    <ion-col size="1"></ion-col>
+    <ion-col size="10" class="no_padding ">
+      <ion-row class="inputs">
+        <ion-col size="1.5">
+          <ion-icon class="center-element icon" name="alarm-outline"></ion-icon>
+        </ion-col>
+        <ion-col size="10.5">
+          <ion-input id="hora" name="hora" required readonly>{{infoDevice.createHour}}
+          </ion-input>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size="1"></ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="1"></ion-col>
+    <ion-col size="10" size-lg>
+      <ion-button color="primary" shape="round" (click)="saveDevice()" class="register bold" expand="block">GUARDAR
+      </ion-button>
+    </ion-col>
+    <ion-col size="1"></ion-col>
+  </ion-row>
+</ion-grid>

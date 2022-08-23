@@ -1,0 +1,27 @@
+@import url("../app.component.scss");
+
+.back {
+  background-attachment: fixed;
+  background-image: url("../../assets/backs/bg_splash_screen.png");
+  height: 87vh;
+}
+
+.chart {
+  max-width: 479px !important;
+}
+
+.doughnutCanvas {
+  position: relative;
+  height: 15vh;
+  width: 40vw;
+}
+
+ion-card {
+  margin: 0%;
+}
+
+.icon {
+  color: black;
+  width: 90%;
+  height: 50%;
+}

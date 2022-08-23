@@ -1,0 +1,167 @@
+<ion-content class="back">
+  <ion-row>
+    <ion-col size="12" class="head"><br></ion-col>
+    <ion-col size="2"> </ion-col>
+    <ion-col size="8">
+      <img class="cup" src="../../assets/logos/coffe_title.png" alt="coffe">
+    </ion-col>
+    <ion-col size="2"> </ion-col>
+    <ion-col size="3"> </ion-col>
+    <ion-col size="6">
+      <div class="sqare cup">
+        <img class="cup" src="../../assets/logos/ic_cafe_app.png" alt="coffe">
+      </div>
+    </ion-col>
+    <ion-col size="3"> </ion-col>
+    <ion-col class="hidden" size="12"><br><br><br></ion-col>
+  </ion-row>
+  <!-- USUARIO -->
+  <ion-row class="data">
+    <ion-col size="1"></ion-col>
+    <ion-col size="10" class="no_padding">
+      <ion-row class="inputs">
+        <ion-col size="1.5">
+          <ion-icon class="center-element icon" name="person"></ion-icon>
+        </ion-col>
+        <ion-col size="10.5">
+          <ion-input id="user" name="user" required [(ngModel)]="loginObj.email" placeholder="Ingrese su correo">
+          </ion-input>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size="1"></ion-col>
+  </ion-row>
+
+  <!-- USUARIO -->
+  <ion-row class="show">
+    <ion-col size="4"></ion-col>
+    <ion-col size="4" class="no_padding">
+      <ion-row class="inputs">
+        <ion-col size="1.5">
+          <ion-icon class="center-element icon" name="person"></ion-icon>
+        </ion-col>
+        <ion-col size="10.5">
+          <ion-input id="user" name="user" required [(ngModel)]="loginObj.email" placeholder="Ingrese su correo">
+          </ion-input>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size="4"></ion-col>
+  </ion-row>
+
+  <!-- PASSWORD -->
+  <ion-row class="data">
+    <ion-col size="1"></ion-col>
+    <ion-col size="10" class="no_padding">
+      <ion-row class="inputs">
+        <ion-col size="1.5">
+          <ion-icon class="center-element icon" name="lock-closed"></ion-icon>
+        </ion-col>
+        <ion-col size="9">
+          <ion-input type="password" id="pass" name="pass" required [(ngModel)]="loginObj.password"
+            placeholder="Ingrese su contraseña"></ion-input>
+        </ion-col>
+        <ion-col size="1.5">
+          <ion-icon [hidden]="isView" class="center-element icon" name="eye" (click)="showPass()"></ion-icon>
+          <ion-icon [hidden]="!isView" class="center-element icon" name="eye-off" (click)="showPass()">
+          </ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size="1"></ion-col>
+  </ion-row>
+
+  <!-- PASSWORD -->
+  <ion-row class="show">
+    <ion-col size="4"></ion-col>
+    <ion-col size="4" class="no_padding">
+      <ion-row class="inputs">
+        <ion-col size="1.5">
+          <ion-icon class="center-element icon" name="lock-closed"></ion-icon>
+        </ion-col>
+        <ion-col size="9">
+          <ion-input type="password" id="pass" name="pass" required [(ngModel)]="loginObj.password"
+            placeholder="Ingrese su contraseña"></ion-input>
+        </ion-col>
+        <ion-col size="1.5">
+          <ion-icon [hidden]="isView" class="center-element icon" name="eye" (click)="showPass()"></ion-icon>
+          <ion-icon [hidden]="!isView" class="center-element icon" name="eye-off" (click)="showPass()">
+          </ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size="4"></ion-col>
+  </ion-row>
+
+  <!--CONFIRM  PASSWORD -->
+  <ion-row class="data">
+    <ion-col size="1"></ion-col>
+    <ion-col size="10" class="no_padding">
+      <ion-row class="inputs">
+        <ion-col size="1.5">
+          <ion-icon class="center-element icon" name="lock-closed"></ion-icon>
+        </ion-col>
+        <ion-col size="9">
+          <ion-input type="password" id="pass1" name="pass1" required [(ngModel)]="loginObj.confirmPass"
+            placeholder="Ingrese su contraseña"></ion-input>
+        </ion-col>
+        <ion-col size="1.5">
+          <ion-icon [hidden]="isView" class="center-element icon" name="eye" (click)="showPass()"></ion-icon>
+          <ion-icon [hidden]="!isView" class="center-element icon" name="eye-off" (click)="showPass()"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size="1"></ion-col>
+  </ion-row>
+
+  <!--CONFIRM  PASSWORD -->
+  <ion-row class="show">
+    <ion-col size="4"></ion-col>
+    <ion-col size="4" class="no_padding">
+      <ion-row class="inputs">
+        <ion-col size="1.5">
+          <ion-icon class="center-element icon" name="lock-closed"></ion-icon>
+        </ion-col>
+        <ion-col size="9">
+          <ion-input type="password" id="pass1" name="pass1" required [(ngModel)]="loginObj.confirmPass"
+            placeholder="Ingrese su contraseña"></ion-input>
+        </ion-col>
+        <ion-col size="1.5">
+          <ion-icon [hidden]="isView" class="center-element icon" name="eye" (click)="showPass()"></ion-icon>
+          <ion-icon [hidden]="!isView" class="center-element icon" name="eye-off" (click)="showPass()"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size="4"></ion-col>
+  </ion-row>
+  <!-- REGISTER -->
+  <ion-row>
+    <ion-col size="1" size-lg></ion-col>
+    <ion-col size="10" size-lg>
+      <ion-button shape="round" (click)="register()" class="login bold" expand="block">REGISTRARSE
+      </ion-button>
+    </ion-col>
+    <ion-col size="1" size-lg></ion-col>
+    <!-- LOGIN -->
+  </ion-row>
+  <!-- HAVE LOGIN -->
+  <ion-row>
+    <ion-col size="1" size-lg> </ion-col>
+    <ion-col size="2" size-lg class="divider"> </ion-col>
+    <ion-col size="6" size-lg class="center">
+      <h6 class="forgot">¿ya tienes una cuenta?</h6>
+    </ion-col>
+    <ion-col size="2" size-lg class="divider"></ion-col>
+    <ion-col size="1" size-lg> </ion-col>
+  </ion-row>
+  <!-- LOGIN -->
+  <ion-row>
+    <ion-col size="1" size-lg></ion-col>
+    <ion-col size="10" size-lg>
+      <ion-button shape="round" [routerLink]="['/login']" class="register bold" expand="block">INICIA SESIÓN
+      </ion-button>
+    </ion-col>
+    <ion-col size="1" size-lg></ion-col>
+  </ion-row>
+
+</ion-content>

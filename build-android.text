@@ -1,0 +1,48 @@
+ionic generate
+ionic generate page
+ionic generate page contact
+ionic generate component contact/form
+ionic generate component login-form --change-detection=OnPush
+ionic generate directive ripple --skip-import
+ionic generate service api/user
+
+ setIntegerProperty("loadUrlTimeoutValue", 70000);
+
+#1 APK
+ionic cordova build --debug android
+ionic cordova build --release android
+#1 BUNDLE
+gradle bundle
+
+#2 Crear Firma
+keytool -genkey -v -keystore release.jks -alias releaseCoffe_project -keyalg RSA -keysize 2048 -validity 10000
+Clave PsAGranda99Dev
+
+#3 Firmar la APK
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore release.jks ./platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk releaseCoffe_project
+#3 Firmar BUNDLE
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore release.jks ./platforms/android/app/build/outputs/bundle/release/app-release.aab releaseCoffe_project
+
+#4 Copiar al build de android
+#APK
+COPY .\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk C:\Users\micha\AppData\Local\Android\Sdk\build-tools\29.0.2\build\app-release-unsigned.apk
+#Bundle
+COPY .\platforms\android\app\build\outputs\bundle\release\app-release.aab C:\Users\micha\AppData\Local\Android\Sdk\build-tools\30.0.2\build\app-release.aab
+
+#5 Optimizar la apk
+zipalign -v 4 ./build/app-release-unsigned.apk ./build/coffee_project.apk
+
+#5 Optimizar la bundle
+zipalign -v 4 ./build/app-release.aab ./build/coffee_project.aab
+
+
+# INSTALAR CAMARA 
+    #ANDROID 9
+        #1 ionic cordova plugin add cordova-plugin-camera 
+        #2 npm install @awesome-cordova-plugins/camera 
+    #ANDROID 10
+        #ACTUALIZAR ANDROID 
+            cordova platform add android@latest
+        #1 npm install @ionic-native/core
+        #2 npm install @ionic-native/camera@5.36.0
+        #3 ionic cordova plugin add cordova-plugin-camera@6.0.0

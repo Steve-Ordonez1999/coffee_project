@@ -1,0 +1,233 @@
+.back {
+    --background: transparent;
+    //background: rgb(255, 255, 255);
+    background: linear-gradient(165deg, rgba(255, 255, 255, 1) 26%, rgba(208, 181, 100, 1) 40%);
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    overflow: scroll;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.center-element {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.right-element {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(100%, -50%);
+}
+
+.left {
+    text-align: left;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+.icon {
+    color: rgba(208, 181, 100, 1);
+}
+
+.no_padding {
+    padding: 0%;
+}
+
+.nav {
+    --background: var(--ion-color-coffePlaceholder) !important;
+    --ion-tab-bar-color-selected: red;
+}
+
+.botton-orange {
+    --background: var(--ion-color-coffeOrange);
+}
+
+.form {
+    max-width: 600px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -52%);
+}
+
+.scroll {
+    background-attachment: fixed;
+    overflow: scroll;
+}
+
+.short {
+    height: 25vh;
+}
+
+.medium {
+    height: 50vh;
+}
+
+.long {
+    height: 75vh;
+}
+
+.all {
+    height: 90vh;
+}
+
+.form ::-webkit-scrollbar {
+    display: none;
+}
+
+.back ::-webkit-scrollbar {
+    display: none;
+}
+
+.inner {
+    border: 1px solid blue;
+    background: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    position: absolute;
+    z-index: 3;
+    bottom: -4px;
+    right: 14px;
+}
+
+.circle-profile {
+    min-height: 150px;
+    max-height: 150px;
+    min-width: 150px;
+    max-width: 150px;
+    border-radius: 100%;
+}
+
+/* ion-col {
+    border: 1px red solid;
+} */
+
+.inputs {
+    margin-bottom: 3%;
+    border-radius: 100px;
+    background: white;
+    //color: rgba(208, 181, 100, 1);
+    color: black;
+    --placeholder-color: rgba(208, 181, 100, 1) !important;
+}
+
+.native-input[disabled].sc-ion-input-md {
+    opacity: 1 !important;
+}
+
+.native-input[disabled].sc-ion-input-ios {
+    opacity: 1 !important;
+}
+
+.line-left {
+    border-left: 1px blue solid;
+}
+
+.line-right {
+    border-right: 1px blue solid;
+}
+
+.black {
+    color: black;
+}
+
+.infoI {
+    color: var(--ion-color-infoButom);
+    width: 90%;
+    height: 50%;
+}
+
+.head{
+    min-height: 10vh;
+}
+
+.show{
+    display: none;
+}
+
+@media screen and (min-width:768px) {
+    .hidden {
+        display: inherit;
+    }
+}
+
+@media screen and (min-width:1000px) {
+    .show{
+        display: flex;
+    }
+    .data{
+        display: none;
+    }
+    .info{
+        max-width: 80vw;
+    }
+}
+
+ion-header{
+    min-height: 30px;
+    padding: 1%;
+}
+
+.float{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -150%);
+    z-index: 50;
+}
+
+ion-content {
+    --offset-bottom: auto!important;
+    --overflow: hidden;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .water {
+    color: aqua;
+}
+
+.earth {
+    color: chocolate;
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
+
+.sun {
+    color: yellow;
+}
+
+.press{
+    color: #00c2ff;
+}
+
+.sqare {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

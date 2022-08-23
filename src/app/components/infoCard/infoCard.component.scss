@@ -1,0 +1,43 @@
+.backN {
+    margin: 0%;
+    background: #1a1a1a;
+    border-radius: 0%;
+    border-radius: 5px;
+}
+.scroll {
+    //background-attachment: fixed;
+    //overflow: scroll;
+    //background-color: white;
+    min-height: 30vh;
+}
+
+.water {
+    color: aqua;
+}
+
+.earth {
+    color: chocolate;
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
+
+.sun {
+    color: yellow;
+}
+
+.press{
+    color: #00c2ff;
+}
+
+.sqare {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

@@ -1,0 +1,13 @@
+@import url("../app.component.scss");
+
+.back {
+    overflow: hidden;
+    background-attachment: fixed;
+    background-image: url("../../assets/backs/bg_splash_screen.png");
+    height: 87vh;
+}
+
+.icon {
+    font-size: 2rem;
+    font-weight: bold;
+}

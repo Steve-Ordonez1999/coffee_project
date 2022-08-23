@@ -1,0 +1,124 @@
+<ion-header>
+  <ion-title>
+    Muestras de hoy: {{fechaCompleta}}
+  </ion-title>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="back">
+
+  <ion-col size="12" class="head"> <br></ion-col>
+  <swiper #swiperSlideShow [config]="config">
+    <ng-template swiperSlide>
+      <ion-card>
+        <ion-card-content>
+          <canvas #doughnut1></canvas>
+        </ion-card-content>
+        <ion-item>
+          <ion-icon slot="start" class="water" name="water-outline"></ion-icon>
+          <ion-icon slot="end" class="earth" name="earth-outline"></ion-icon>
+          <p>
+            Humedad de la tierra (HT %)
+          </p>
+        </ion-item>
+      </ion-card>
+    </ng-template>
+<!--     <ng-template swiperSlide>
+      <ion-card>
+        <ion-card-content>
+          <canvas #doughnut3></canvas>
+        </ion-card-content>
+        <ion-item>
+          <ion-icon slot="start" class="water" name="water-outline"></ion-icon>
+          <ion-icon slot="end" class="green" name="leaf-outline"></ion-icon>
+          <p>
+            Humedad del ambiente (HA %)
+          </p>
+        </ion-item>
+      </ion-card>
+
+    </ng-template> -->
+    <ng-template swiperSlide>
+      <ion-card>
+        <ion-card-content>
+          <canvas #doughnut4></canvas>
+        </ion-card-content>
+        <ion-item>
+          <ion-icon slot="start" class="red" name="thermometer-outline"></ion-icon>
+          <p>
+            Temperatura del ambiente (TA °C)
+          </p>
+        </ion-item>
+      </ion-card>
+    </ng-template>
+<!--     <ng-template swiperSlide>
+      <ion-card>
+        <ion-card-content>
+          <canvas #doughnut5></canvas>
+        </ion-card-content>
+        <ion-item>
+          <ion-icon slot="start" class="sun" name="sunny-outline"></ion-icon>
+          <p>
+            Luz del ambiente (LA %)
+          </p>
+        </ion-item>
+      </ion-card>
+    </ng-template> -->
+    <ng-template swiperSlide>
+      <ion-card>
+        <ion-card-content>
+          <canvas #doughnut6></canvas>
+        </ion-card-content>
+        <ion-item>
+          <ion-icon slot="start" class="press" name="cloud-outline"></ion-icon>
+          <ion-icon slot="end" class="press" name="swap-vertical-outline"></ion-icon>
+          <p>
+            Presión ambiente (PA PSI)
+          </p>
+        </ion-item>
+      </ion-card>
+    </ng-template>
+  </swiper>
+
+  <ion-row>
+    <ion-col size="1"> </ion-col>
+    <ion-col size="4">
+      <ion-button shape="round" [routerLink]="['../reporting']" class="botton-orange bold" expand="block">REPORTES
+      </ion-button>
+    </ion-col>
+    <ion-col size="1"> </ion-col>
+    <ion-col size="2">
+      <ion-icon class="icon center-element" name="bar-chart-outline"></ion-icon>
+    </ion-col>
+    <ion-col size="2">
+      <ion-toggle (ionChange)="changeChart()" mode="md" color="danger"></ion-toggle>
+    </ion-col>
+    <ion-col size="2">
+      <ion-icon class="icon center-element" name="pie-chart-outline"></ion-icon>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size="1"> </ion-col>
+    <ion-col size="10">
+      <ion-card>
+        <ion-card-header>
+          Métricas del cafetal
+        </ion-card-header>
+        <ion-card-content [hidden]="viewMode">
+          <canvas #barCanvas style="height:15vh; width:40vw"></canvas>
+        </ion-card-content>
+        <ion-card-content [hidden]="!viewMode">
+          <canvas #polarAreaCanvas style="position: relative; height:15vh; width:40vw"></canvas>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    <ion-col size="1"> </ion-col>
+  </ion-row>
+
+
+  <ion-refresher style="background: transparent;" slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200"
+    (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content style="background: transparent;"></ion-refresher-content>
+  </ion-refresher>
+
+</ion-content>

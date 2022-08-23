@@ -1,0 +1,30 @@
+@import url("../app.component.scss");
+
+.back {
+  background-image: url("../../assets/backs/bg_splash_screen.png");
+}
+
+.menu-back {
+  background: var(--ion-card-background, var(--ion-item-background, var(--ion-background-color, #fff)));
+}
+
+.label {
+  padding-left: 10px;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+}
+
+.lineChart {
+  position: relative;
+  min-height: 35vh;
+  width: 40vw;
+}
+
+ion-card {
+  min-width: 90%;
+}
