@@ -154,12 +154,28 @@ export class ReportingPage implements OnInit {
   filtrarLista(type) {
     this.filtro = [];
     let inicio = this.share.jsonDate(this.fechaInit);
+    
+    let hoy = new Date();
+    let i = new Date(inicio.mes + '/' + inicio.dia + '/' + inicio.año);
+    
 
     switch (type) {
       case 'Rango':
         let fin = this.share.jsonDate(this.fechaFin);
-        let i = new Date(inicio.mes + '/' + inicio.dia + '/' + inicio.año);
+        /* let i = new Date(inicio.mes + '/' + inicio.dia + '/' + inicio.año); */
         let f = new Date(fin.mes + '/' + fin.dia + '/' + fin.año);
+      
+        if (i.getTime() > hoy.getTime()) {
+          console.log(i.getTime() > hoy.getTime());
+          this.share.showToastColor('Alerta!!', 'No puede seleccionar una fecha de inicio mayor a la de hoy', 'w', 's');
+          return false;
+        }
+
+        if (f.getTime() > hoy.getTime()) {
+          console.log(i.getTime() > hoy.getTime());
+          this.share.showToastColor('Alerta!!', 'No puede seleccionar una fecha de fin mayor a la de hoy', 'w', 's');
+          return false;
+        }
 
         if (i.getTime() > f.getTime() || f.getTime() < i.getTime()) {
           this.share.showToastColor('Alerta!!', 'Seleccione un rango de fechas válido', 'w', 's');
@@ -190,8 +206,17 @@ export class ReportingPage implements OnInit {
         }
         break;
       case 'Hasta':
+
+        if (i.getTime() > hoy.getTime()) {
+          console.log(i.getTime() > hoy.getTime());
+          
+          this.share.showToastColor('Alerta!!', 'No puede seleccionar una fecha mayor a la de hoy', 'w', 's');
+          return false;
+        }
+
         Object.keys(this.jsonObj).forEach((k) => {
           let kDate = this.share.jsonDate(this.jsonObj[k].fecha);
+
           if (kDate.mes <= inicio.mes &&
             kDate.año <= inicio.año
           ) {
@@ -205,6 +230,14 @@ export class ReportingPage implements OnInit {
         });
         break;
       case 'Día':
+
+        if (i.getTime() > hoy.getTime()) {
+          console.log(i.getTime() > hoy.getTime());
+          
+          this.share.showToastColor('Alerta!!', 'No puede seleccionar una fecha mayor a la de hoy', 'w', 's');
+          return false;
+        }
+
         Object.keys(this.jsonObj).forEach((k) => {
           let kDate = this.share.jsonDate(this.jsonObj[k].fecha);
           if (kDate.mes == inicio.mes &&
