@@ -81,7 +81,7 @@ export class ReportingPage implements OnInit {
     spaceBetween: 15,
     navigation: true,
     autoplay: {
-      delay: 2500,
+      delay: 4500,
       disableOnInteraction: false
     },
     //loop: true,
@@ -154,25 +154,23 @@ export class ReportingPage implements OnInit {
   filtrarLista(type) {
     this.filtro = [];
     let inicio = this.share.jsonDate(this.fechaInit);
-    
+
     let hoy = new Date();
     let i = new Date(inicio.mes + '/' + inicio.dia + '/' + inicio.año);
-    
+
 
     switch (type) {
       case 'Rango':
         let fin = this.share.jsonDate(this.fechaFin);
         /* let i = new Date(inicio.mes + '/' + inicio.dia + '/' + inicio.año); */
         let f = new Date(fin.mes + '/' + fin.dia + '/' + fin.año);
-      
+
         if (i.getTime() > hoy.getTime()) {
-          console.log(i.getTime() > hoy.getTime());
           this.share.showToastColor('Alerta!!', 'No puede seleccionar una fecha de inicio mayor a la de hoy', 'w', 's');
           return false;
         }
 
         if (f.getTime() > hoy.getTime()) {
-          console.log(i.getTime() > hoy.getTime());
           this.share.showToastColor('Alerta!!', 'No puede seleccionar una fecha de fin mayor a la de hoy', 'w', 's');
           return false;
         }
@@ -208,8 +206,6 @@ export class ReportingPage implements OnInit {
       case 'Hasta':
 
         if (i.getTime() > hoy.getTime()) {
-          console.log(i.getTime() > hoy.getTime());
-          
           this.share.showToastColor('Alerta!!', 'No puede seleccionar una fecha mayor a la de hoy', 'w', 's');
           return false;
         }
@@ -232,8 +228,6 @@ export class ReportingPage implements OnInit {
       case 'Día':
 
         if (i.getTime() > hoy.getTime()) {
-          console.log(i.getTime() > hoy.getTime());
-          
           this.share.showToastColor('Alerta!!', 'No puede seleccionar una fecha mayor a la de hoy', 'w', 's');
           return false;
         }
@@ -560,6 +554,10 @@ export class ReportingPage implements OnInit {
     /*COLORES Y VARIACIÓN DEL COLOR, PARA LA TEMPERATURA, BAJA AZUL, MEDIA AMARILLA, ALTA ROJA */
     let colors = this.share.getColorsParams('', this.tot_temp_ambi);
 
+
+    // Note: changes to the plugin code is not reflected to the chart, because the plugin is loaded at chart construction time and editor changes only trigger an chart.update().
+
+
     this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
       type: 'doughnut',
       data: {
@@ -568,7 +566,10 @@ export class ReportingPage implements OnInit {
           label: '# of Votes',
           data: allData,
           backgroundColor: colors.base,
-          hoverBackgroundColor: colors.selected
+          hoverBackgroundColor: colors.selected,
+          hoverBorderColor: 3,
+          borderColor: 1,
+          hoverBorderWidth: 4
         }]
       }
     });
@@ -582,7 +583,10 @@ export class ReportingPage implements OnInit {
           label: '# of Votes',
           data: ht,
           backgroundColor: colors.base,
-          hoverBackgroundColor: colors.selected
+          hoverBackgroundColor: colors.selected,
+          hoverBorderColor: 3,
+          borderColor: 1,
+          hoverBorderWidth: 4
         }]
       }
     });
@@ -609,7 +613,10 @@ export class ReportingPage implements OnInit {
           label: '# of Votes',
           data: ta,
           backgroundColor: colors.base,
-          hoverBackgroundColor: colors.selected
+          hoverBackgroundColor: colors.selected,
+          hoverBorderColor: 3,
+          borderColor: 1,
+          hoverBorderWidth: 4
         }]
       }
     });
@@ -636,7 +643,10 @@ export class ReportingPage implements OnInit {
           label: '# of Votes',
           data: pa,
           backgroundColor: colors.base,
-          hoverBackgroundColor: colors.selected
+          hoverBackgroundColor: colors.selected,
+          hoverBorderColor: 3,
+          borderColor: 1,
+          hoverBorderWidth: 4
         }]
       }
     });

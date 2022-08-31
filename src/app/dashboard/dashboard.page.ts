@@ -23,7 +23,7 @@ export class DashboardPage implements OnInit {
     spaceBetween: 50,
     navigation: true,
     autoplay: {
-      delay: 2500,
+      delay: 3500,
       disableOnInteraction: false
     },
     //loop: true,
@@ -107,7 +107,7 @@ export class DashboardPage implements OnInit {
       data: {
         labels: labelsParams,
         datasets: [{
-          label: '# of Votes',
+          label: "Métricas",
           data: newData,
           backgroundColor: [
             'rgba(255, 128, 0, 0.3)',
@@ -125,10 +125,11 @@ export class DashboardPage implements OnInit {
             /* 'rgba(255, 159, 64, 1)', */
             'rgba(20, 143, 119, 1)'
           ],
-          borderWidth: 1
+          borderWidth: 3,
         }]
       },
       options: {
+        indexAxis:'y',
         scales: {
           yAxes: [{
             ticks: {
@@ -171,7 +172,10 @@ export class DashboardPage implements OnInit {
           hoverBackgroundColor: [
             '#ff8000',
             '#c1c1c1',
-          ]
+          ],
+          hoverBorderColor: 3,
+          borderColor: 1,
+          hoverBorderWidth: 4
         }]
       }
     });
@@ -208,7 +212,10 @@ export class DashboardPage implements OnInit {
           hoverBackgroundColor: [
             color_temp[1],
             '#c1c1c1',
-          ]
+          ],
+          hoverBorderColor: 3,
+          borderColor: 1,
+          hoverBorderWidth: 4
         }]
       }
     });
@@ -245,7 +252,10 @@ export class DashboardPage implements OnInit {
           hoverBackgroundColor: [
             '#148F77',
             '#c1c1c1',
-          ]
+          ],
+          hoverBorderColor: 3,
+          borderColor: 1,
+          hoverBorderWidth: 4
         }]
       }
     });
@@ -259,7 +269,10 @@ export class DashboardPage implements OnInit {
         //label: 'My First Dataset',
         data: [this.tot_hum_tierra ?? 0, /* this.tot_ph,  this.tot_hum_ambi ?? 0,*/ this.tot_temp_ambi ?? 0,/* this.tot_luz_ambi ?? 0,*/ this.tot_presion ?? 0],
         backgroundColor: settings.base,
-        hoverBackgroundColor: settings.selected
+        hoverBackgroundColor: settings.selected,
+        hoverBorderColor: 3,
+        borderColor: 1,
+        hoverBorderWidth: 4
       }]
     };
 

@@ -37,13 +37,20 @@ export class RegisterPage implements OnInit {
   showPass() {
     let txtPass: any = document.getElementById('pass');
     let txtPass1: any = document.getElementById('pass1');
-    if (txtPass.type == 'text') {
+    let txtPasscell: any = document.getElementById('passcell');
+    let txtPass1cell: any = document.getElementById('pass1cell');
+
+    if (txtPass.type == 'text' || txtPass1.type == 'text' || txtPasscell.type == 'text' || txtPass1cell.type == 'text') {
       txtPass.type = 'password'
       txtPass1.type = 'password'
+      txtPasscell.type = 'password'
+      txtPass1cell.type = 'password'
     }
     else {
       txtPass.type = 'text'
       txtPass1.type = 'text'
+      txtPasscell.type = 'text'
+      txtPass1cell.type = 'text'
     }
 
     this.isView = !this.isView;

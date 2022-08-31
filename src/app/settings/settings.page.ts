@@ -86,7 +86,7 @@ export class SettingsPage implements OnInit {
     } catch (ex) {
       if (ex.status == 401) {
         //this.authServ.onIdTokenRevocation();
-        this.share.showToastColor('Alerta', 'La sesión a caducado, vuelvva a iniciar sesión', 'w', 'm')
+        this.share.showToastColor('Alerta', 'La sesión a caducado, vuelva a iniciar sesión', 'w', 'm')
         this.router.navigate(['/login']).then(r => { });
       }
     }
@@ -146,4 +146,17 @@ export class SettingsPage implements OnInit {
       this.share.showToastColor('', 'El dispositivo: ' + item.nombre + ' está apagado', 'd', 's')
     }
   }
+
+  async deletedevice(keydevice){
+    let resp = await this.share.confirmQuestion('Alerta!!', '¿Está seguro de eliminar permanentemente el dispositivo de su lista?');
+
+    if (resp) {
+      const response = await this.nodos.removeDevice(keydevice).toPromise();
+      await this.loadDevices();
+      this.share.showToastColor('Confirmación', 'Se eliminó el dispositivo correctamente', 's', 'm')
+    } else
+      this.share.showToastColor('Cancelado', 'Se canceló la eliminación del dispositivo', 'w', 'm')
+  }
+
+
 }

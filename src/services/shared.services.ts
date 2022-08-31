@@ -11,7 +11,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 export const PRIORIDAD = 999999;
 
-export const labelsParams = ['Humedad de la Tierra',/*  'PHT', 'HA',*/  'Temperatura Ambiente',/* 'LA',*/ 'Presión Ambiente'];
+export const labelsParams = ['Humedad de la Tierra',/*  'PHT', 'HA',*/  'Temperatura del Ambiente',/* 'LA',*/ 'Presión del Ambiente'];
 
 export const colorParams = {
   HT: {
@@ -184,6 +184,32 @@ export class SharedService {
         currentModal = null;
       });
     }
+  }
+  
+  async confirmQuestion(header: any, message: string) {
+    let resolveFunction: (confirm: boolean) => void;
+    const promise = new Promise<boolean>(resolve => {
+      resolveFunction = resolve;
+    });
+    const alert = await this.alertController.create({
+      mode: 'ios',
+      header: header,
+      message: message,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => resolveFunction(false)
+        },
+        {
+          text: 'Confirmar',
+          handler: () => resolveFunction(true)
+        },
+      ],
+    });
+    await alert.present();
+    await alert.onDidDismiss();
+    return promise;
   }
 
   async confirm(

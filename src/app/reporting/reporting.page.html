@@ -11,11 +11,11 @@
           <ion-icon class="center-element infoI" name="cloud-download-outline"></ion-icon>
         </ion-col>
         <ion-col [hidden]="dowReport" size="5" size-lg>
-          <ion-button [disabled]="active" (click)="exportData('rep')" class="botton-orange bold" expand="block">REPORTE
+          <ion-button [disabled]="active" (click)="exportData('rep')" class="botton-orange bold" expand="block">Descargar Reporte
           </ion-button>
         </ion-col>
         <ion-col [hidden]="dowReport" size="5" size-lg>
-          <ion-button (click)="exportData('all')" class="botton-orange bold" expand="block">TODO
+          <ion-button (click)="exportData('all')" class="botton-orange bold" expand="block">Descargar Dataset Completo
           </ion-button>
         </ion-col>
         <ion-col size="2" size-lg>
@@ -202,6 +202,7 @@
                 <ion-col size="12">
                   <ion-item style="border-radius: 25px;">
                     <ion-icon slot="start" class="red" name="thermometer-outline"></ion-icon>
+                    <ion-icon slot="end" class="press" name="cloud-outline"></ion-icon>
                     <p>
                       Temperatura del ambiente ({{tot_temp_ambi}} °C)
                     </p>
@@ -217,10 +218,10 @@
                 </ion-col> -->
                 <ion-col size="12">
                   <ion-item style="border-radius: 25px;">
-                    <ion-icon slot="start" class="press" name="cloud-outline"></ion-icon>
-                    <ion-icon slot="end" class="press" name="swap-vertical-outline"></ion-icon>
+                    <ion-icon slot="start" class="press" name="swap-vertical-outline"></ion-icon>
+                    <ion-icon slot="end" class="press" name="cloud-outline"></ion-icon>
                     <p>
-                      Presión ambiente ({{tot_presion}} PSI)
+                      Presión del ambiente ({{tot_presion}} PSI)
                     </p>
                   </ion-item>
                 </ion-col>
@@ -269,6 +270,7 @@
             </ion-card-content>
             <ion-item>
               <ion-icon slot="start" class="red" name="thermometer-outline"></ion-icon>
+              <ion-icon slot="end" class="press" name="cloud-outline"></ion-icon>
               <p>
                 Temperatura del ambiente ({{tot_temp_ambi}} °C)
               </p>
@@ -294,10 +296,10 @@
               <canvas #doughnutCanvas5 style="position: relative; height:25vh; width:40vw;"></canvas>
             </ion-card-content>
             <ion-item>
-              <ion-icon slot="start" class="press" name="cloud-outline"></ion-icon>
-              <ion-icon slot="end" class="press" name="swap-vertical-outline"></ion-icon>
+              <ion-icon slot="start" class="press" name="swap-vertical-outline"></ion-icon>
+              <ion-icon slot="end" class="press" name="cloud-outline"></ion-icon>
               <p>
-                Presión ambiente ({{tot_presion}} PSI)
+                Presión del ambiente ({{tot_presion}} PSI)
               </p>
             </ion-item>
           </ion-card>

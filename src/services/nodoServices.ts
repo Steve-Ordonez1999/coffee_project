@@ -25,6 +25,7 @@ export class nodoServices {
         return this._http.post<any>($URL, data);
     }
 
+
     getInformacion(): Observable<any> {
         const user = JSON.parse(sessionStorage.getItem('user'));
         let uid = user.uid;
@@ -49,11 +50,21 @@ export class nodoServices {
         const user = JSON.parse(sessionStorage.getItem('user'));
         let uid = user.uid;
         let token = user.stsTokenManager.accessToken;
-
-        const $URL = `${this.url}/dispositivos/${uid}/${key}.json`;
-
+    
+        const $URL = `${this.url}/dispositivos/${uid}/${key}.json?auth=${token}`;
+    
         return this._http.patch<any>($URL, data);
-    }
+      }
+    
+      removeDevice(keydevice): Observable<any> {
+        const user = JSON.parse(sessionStorage.getItem('user'));
+        let uid = user.uid;
+        let token = user.stsTokenManager.accessToken;
+    
+        const $URL = `${this.url}/dispositivos/${uid}/${keydevice}.json?auth=${token}`;
+    
+        return this._http.delete<any>($URL);
+      }
 }
 
 export interface Months {

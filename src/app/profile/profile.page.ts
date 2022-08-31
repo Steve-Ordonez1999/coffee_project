@@ -212,7 +212,7 @@ export class ProfilePage implements OnInit {
       this.calculateTimeSession();
 
     } catch (ex) {
-      this.share.showToastColor('Erorr!!', 'No pudo renovarse la sesión, vuelva a iniciar', 'd', 'm')
+      this.share.showToastColor('Error!!', 'No pudo renovarse la sesión, vuelva a iniciar', 'd', 'm')
       console.log(ex);
     }
 
@@ -228,5 +228,49 @@ export class ProfilePage implements OnInit {
     this.minutes = Math.round((dif / 1000) / 60);
     console.log(this.minutes);
   }
+
+  valtel(tel) {
+
+    var numbers = /[0-9]/;
+    let initel = tel.target.value[0];
+    let fintel = tel.target.value;
+
+    let copia = "";
+    for (let x = 0; x < fintel.length; x++) {
+      let y = "";
+
+      y = fintel[x];
+      if (y.match(numbers) || (y == "+" && x == 0)) {
+
+        copia += y;
+      } else {
+        this.share.showToastColor("¡Alerta!", "¡En el campo teléfono solo se aceptan números! y el formato +593 XXX XXX XXXX ó 0XX XXX XXXX", "w", "m");
+      }
+    }
+
+    this.infoUser.telf = copia;
+    tel.target.value = copia;
+
+    var error = false;
+    if (tel.target.value[0] == '0') {
+      if (tel.target.value.length > 10) {
+        tel.target.value = tel.target.value.substr(0, 10);
+        this.infoUser.telf = tel.target.value.substr(0, 10);
+        error = true;
+      }
+    } else if (tel.target.value[0] == '+')
+      if (tel.target.value.length > 13) {
+        tel.target.value = tel.target.value.substr(0, 13);
+        this.infoUser.telf = tel.target.value.substr(0, 13);
+        error = true;
+
+      }
+    if (error)
+      this.share.showToastColor("¡Alerta!", "¡En el campo teléfono solo se aceptan 13 caracteres en el formato +593 XXX XXX XXXX y 10 en el formato 0XX XXX XXXX!", "w", "m");
+
+    return false;
+
+  }
+
 }
 

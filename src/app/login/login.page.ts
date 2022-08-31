@@ -57,10 +57,10 @@ export class LoginPage implements OnInit {
           sessionStorage.setItem('user', JSON.stringify(user));
           this.share.showToastColor('', 'Bienvenido de nuevo ' + user.email, 's', 'm');
         }
-        this.share.stopLoading();
       }
       else
         this.share.showToastColor('', 'Hay campos vacíos.', 'w', 's');
+      this.share.stopLoading();
     }
     catch (ex) {
       this.share.stopLoading();
