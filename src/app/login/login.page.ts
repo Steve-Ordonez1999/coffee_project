@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Platform } from '@ionic/angular';
+import { MenuController, Platform } from '@ionic/angular';
 import { PRIORIDAD, SharedService } from 'src/services/shared.services';
 import { UserService } from 'src/services/user.service';
 
@@ -12,11 +12,14 @@ import { UserService } from 'src/services/user.service';
 export class LoginPage implements OnInit {
 
   constructor(
+    private menu: MenuController,
     private authService: UserService,
     private share: SharedService,
     private route: Router,
     private platform: Platform
   ) {
+    menu.swipeGesture(false);
+
     this.platform.backButton.subscribeWithPriority(PRIORIDAD, () => {
       navigator['app'].exitApp();
     });

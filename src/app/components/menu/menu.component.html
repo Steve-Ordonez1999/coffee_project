@@ -1,0 +1,46 @@
+<ion-menu side="start" menuId="menu" contentId="main">
+  <ion-content class="back">
+    <ion-grid fixed>
+      <ion-row class="back-img" style="border-radius: 15px; ">
+        <ion-col size="1"> </ion-col>
+        <ion-col size="10">
+          <img src="../../../assets/logos/coffe_title.png" />
+        </ion-col>
+        <ion-col size="1"> </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-list style="margin-top: 5%;">
+      <ion-item button (click)="toggle()" [routerLink]="['../../tabs/real-time/humedad']" class="options">
+        <ion-icon slot="start" class="water" name="water-outline"></ion-icon>
+        <ion-icon slot="end" class="earth" name="earth-outline"></ion-icon>
+        <p>
+          Humedad de la tierra (%)
+        </p>
+      </ion-item>
+
+      <ion-item button (click)="toggle()" [routerLink]="['../../tabs/real-time/temperatura']" class="options">
+        <ion-icon slot="start" class="red" name="thermometer-outline"></ion-icon>
+        <ion-icon slot="end" class="press" name="cloud-outline"></ion-icon>
+        <p>
+          Temperatura del ambiente (°C)
+        </p>
+      </ion-item>
+
+      <ion-item button (click)="toggle()" [routerLink]="['../../tabs/real-time/presion']" class="options">
+        <ion-icon slot="start" class="press" name="swap-vertical-outline"></ion-icon>
+        <ion-icon slot="end" class="press" name="cloud-outline"></ion-icon>
+        <p>
+          Presión del ambiente (PSI)
+        </p>
+      </ion-item>
+
+      <ion-item button (click)="toggle()" [routerLink]="['../../tabs/reporting']" class="options">
+        <ion-icon slot="start" class="earth" name="bar-chart-outline"></ion-icon>
+        <ion-icon slot="end" class="press" name="pie-chart-outline"></ion-icon>
+        <p>
+          REPORTES
+        </p>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>

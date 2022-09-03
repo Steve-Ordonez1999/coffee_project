@@ -1,0 +1,17 @@
+@import url("../app.component.scss");
+
+.back {
+    background-image: url("../../assets/backs/bg_splash_screen.png");
+}
+
+
+.menu-back {
+    background: var(--ion-card-background, var(--ion-item-background, var(--ion-background-color, #fff)));
+}
+
+
+.chart {
+    position: relative;
+    height: 25vh;
+    width: 40vw;
+}

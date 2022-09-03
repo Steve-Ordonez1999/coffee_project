@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <!-- <ion-back-button></ion-back-button> -->
+      <ion-icon name="menu-outline" (click)="toggle()"></ion-icon>
+
+    </ion-buttons>
+    <ion-title>Datos en tiempo real</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="margin-top: 10%;" class="back">
+  <!-- SELECT REPORT TYPE -->
+  <ion-row class="menu-back">
+    <ion-col size="6">
+      <ion-label class="label">Cantidad de horas</ion-label>
+    </ion-col>
+    <ion-col size="6">
+      <ion-input type="number" value="1" [(ngModel)]="horas" (ionInput)="valNumber($event)" min="1" max="maxHoras">
+      </ion-input>
+
+    </ion-col>
+  </ion-row>
+
+  <ion-refresher style="background: transparent;" slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200"
+    (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content style="background: transparent;"></ion-refresher-content>
+  </ion-refresher>
+  <ion-row>
+    <ion-col size="0.5"> </ion-col>
+    <ion-col size="11" [hidden]="!active">
+      <ion-card style="min-width: 100%;">
+        <ion-card-header>
+          Ultima lectura: {{datesRows[datesRows.length - 1]}} ( {{data[data.length - 1]}} <span
+            *ngIf="type == 'HT'">%</span><span *ngIf="type == 'TA'">°C</span><span *ngIf="type == 'PA'">Psi</span> )
+        </ion-card-header>
+        <ion-card-content>
+          <canvas #lineCanvasH class="chart" style="position: relative; height:25vh; width:40vw;"></canvas>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    <ion-col size="0.5"> </ion-col>
+  </ion-row>
+</ion-content>

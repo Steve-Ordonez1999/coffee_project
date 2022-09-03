@@ -194,8 +194,7 @@ export class ProfilePage implements OnInit {
   async renoveSession() {
     try {
       const response = await this.authServ.onIdTokenRevocation().toPromise();
-      console.log(response);
-
+     
       let newStsTokenManager = {
         refreshToken: response.refresh_token,
         accessToken: response.access_token,
@@ -213,6 +212,7 @@ export class ProfilePage implements OnInit {
 
     } catch (ex) {
       this.share.showToastColor('Error!!', 'No pudo renovarse la sesión, vuelva a iniciar', 'd', 'm')
+      this.router.navigate(['/login']).then(r => { });
       console.log(ex);
     }
 
@@ -226,7 +226,7 @@ export class ProfilePage implements OnInit {
 
     var dif = (expire.getTime() - now.getTime());
     this.minutes = Math.round((dif / 1000) / 60);
-    console.log(this.minutes);
+   
   }
 
   valtel(tel) {

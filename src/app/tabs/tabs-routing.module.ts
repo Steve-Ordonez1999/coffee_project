@@ -29,6 +29,14 @@ const routes: Routes = [
         //canActivate: [AuthGuard]
       },
       {
+        path: 'real-time',
+        loadChildren: () => import('../real-time/real-time.module').then(m => m.RealTimePageModule)
+      },
+      {
+        path: 'real-time/:type',
+        loadChildren: () => import('../real-time/real-time.module').then(m => m.RealTimePageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs',
         pathMatch: 'full'

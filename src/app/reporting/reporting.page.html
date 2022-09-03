@@ -11,15 +11,15 @@
           <ion-icon class="center-element infoI" name="cloud-download-outline"></ion-icon>
         </ion-col>
         <ion-col [hidden]="dowReport" size="5" size-lg>
-          <ion-button [disabled]="active" (click)="exportData('rep')" class="botton-orange bold" expand="block">Descargar Reporte
+          <ion-button [disabled]="active" (click)="exportData('rep')" class="botton-orange bold" expand="block">REPORTE
           </ion-button>
         </ion-col>
         <ion-col [hidden]="dowReport" size="5" size-lg>
-          <ion-button (click)="exportData('all')" class="botton-orange bold" expand="block">Descargar Dataset Completo
+          <ion-button (click)="exportData('all')" class="botton-orange bold" expand="block">TODO
           </ion-button>
         </ion-col>
         <ion-col size="2" size-lg>
-          <ion-icon (click)="presentInfo()" class="infoI right-element icon" name="information-circle-outline">
+          <ion-icon hidden class="infoI right-element icon" name="information-circle-outline">
           </ion-icon>
         </ion-col>
       </ion-row>

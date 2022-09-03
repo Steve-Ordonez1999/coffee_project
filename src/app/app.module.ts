@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 
 import { SwiperModule } from 'swiper/angular'
 import { AppRoutingModule } from './app-routing.module';
+import { ComponentsModule } from './components/components.module';
 
 //import { ExportAsModule } from 'ngx-export-as';
 
@@ -26,6 +27,7 @@ import { AppRoutingModule } from './app-routing.module';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     HttpClientModule,
+    ComponentsModule,
     //ExportAsModule
   ],
   providers: [
@@ -35,3 +37,4 @@ import { AppRoutingModule } from './app-routing.module';
   bootstrap: [AppComponent],
 })
 export class AppModule { }
+

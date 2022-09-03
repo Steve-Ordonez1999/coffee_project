@@ -6,7 +6,6 @@ import { Chart } from 'chart.js';
 import { DataService, tableDataset } from 'src/services/data.service';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { InfoCardComponent } from '../components/infoCard/infoCard.component';
 import { SwiperOptions } from 'swiper';
 
 @Component({
@@ -96,6 +95,8 @@ export class ReportingPage implements OnInit {
     private platafrom: Platform,
     private router: Router
   ) {
+    console.log(platafrom.platforms());
+
     for (let plat of platafrom.platforms()) {
       if (plat == "desktop")
         this.dowReport = false;
@@ -736,7 +737,5 @@ export class ReportingPage implements OnInit {
     this.lineChartMethod();
   }
 
-  presentInfo() {
-    this.share.presentPopover(InfoCardComponent);
-  }
+
 }

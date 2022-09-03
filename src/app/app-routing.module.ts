@@ -30,6 +30,10 @@ const routes: Routes = [
   },  {
     path: 'new-device',
     loadChildren: () => import('./components/new-device/new-device.module').then( m => m.NewDevicePageModule)
+  },
+  {
+    path: 'real-time',
+    loadChildren: () => import('./real-time/real-time.module').then( m => m.RealTimePageModule)
   }
 
 ];

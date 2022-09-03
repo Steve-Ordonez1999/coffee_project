@@ -185,7 +185,7 @@ export class SharedService {
       });
     }
   }
-  
+
   async confirmQuestion(header: any, message: string) {
     let resolveFunction: (confirm: boolean) => void;
     const promise = new Promise<boolean>(resolve => {
@@ -587,18 +587,6 @@ export class SharedService {
       base: bases,
       selected: selecteds
     }
-    /* if (param == "") {
-
-       colors.labels.filter((item) => item !== '')
-       colors.base.filter((item) => item !== 'rgba(193, 193, 193, 0.5)')
-       colors.selected.filter((item) => item !== '#c1c1c1')
-     }
-     if (param != "" && !colors.labels.includes('')) {
-
-       colors.labels.push('')
-       colors.base.push('rgba(193, 193, 193, 0.5)');
-       colors.selected.push('#c1c1c1');
-     }*/
 
     return colors;
   }
@@ -609,5 +597,13 @@ export class SharedService {
     var expire = new Date(now.getTime() + addMlSeconds);
 
     return expire.getTime();
+  }
+
+  getLastHours(date, horas) {
+    var now = new Date();
+    var getMinuts = 60 * 60000;
+    var removeHours = getMinuts * horas;
+
+    return new Date(now.getTime() - removeHours);
   }
 }

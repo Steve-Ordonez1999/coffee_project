@@ -1,0 +1,28 @@
+@import url("../../app.component.scss");
+
+.back {
+    overflow: inherit;
+}
+
+.back-img {
+    border: 0.01px solid #d2cdcd;
+    background: rgb(255, 255, 255);
+    background: linear-gradient(170deg, rgba(255, 255, 255, 1) 40%, rgba(208, 181, 100, 1) 100%);
+    box-shadow: 0.5px 10px 22px 3px rgba(0, 0, 0, 0.24);
+    margin-top: 8%;
+}
+
+ion-list {
+    background: transparent;
+}
+
+.options {
+    max-width: 90%;
+    margin: 3% 5% 0% 5%;
+    border-radius: 15px;
+    border: 0.5px solid #d2cdcd;
+
+    p{
+        font-size: 0.8rem;
+    }
+}

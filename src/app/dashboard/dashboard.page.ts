@@ -5,7 +5,6 @@ import { Chart } from 'chart.js';
 import { nodoServices } from 'src/services/nodoServices';
 import { labelsParams, PRIORIDAD, SharedService } from 'src/services/shared.services';
 import { SwiperOptions } from 'swiper';
-import { InfoCardComponent } from '../components/infoCard/infoCard.component';
 
 import SwiperCore, { Autoplay, Keyboard, Pagination, Scrollbar, Zoom } from 'swiper';
 SwiperCore.use([Autoplay, Keyboard, Pagination, Scrollbar, Zoom]);
@@ -305,8 +304,8 @@ export class DashboardPage implements OnInit {
       console.log(ex);
       if (ex.status == 401) {
         //this.authServ.onIdTokenRevocation();
-        this.share.showToastColor('Alerta', 'La sesión a caducado, vuelva a iniciar sesión', 'w', 'm')
-        this.router.navigate(['/login']).then(r => { });
+        this.share.showToastColor('Alerta', 'La sesión a caducado, refresca el token o vuelva a iniciar sesión', 'w', 'm')
+        this.router.navigate(['../tabs/profile']).then(r => { });
       }
     }
   }
@@ -390,7 +389,5 @@ export class DashboardPage implements OnInit {
     ev.target.complete();
   }
 
-  presentInfo() {
-    this.share.presentPopover(InfoCardComponent);
-  }
+
 }
