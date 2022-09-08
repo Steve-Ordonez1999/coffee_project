@@ -32,6 +32,7 @@ export class RealTimePage implements OnInit {
   tRows: any[] = [];
   pRows: any[] = [];
 
+  param;
 
   private type;
   active = false;
@@ -44,9 +45,9 @@ export class RealTimePage implements OnInit {
     private nodos: nodoServices,
     private dataActions: DataService
   ) {
-    var param = this.route.snapshot.paramMap.get("type") ?? 'all';
+    this.param = this.route.snapshot.paramMap.get("type") ?? 'all';
 
-    switch (param) {
+    switch (this.param) {
       case 'humedad':
         this.type = 'HT'
         break;
@@ -75,6 +76,7 @@ export class RealTimePage implements OnInit {
   async getData() {
     try {
       this.lastRows = [];
+      this.horas = JSON.parse(sessionStorage.getItem('horas')) ?? 1;
       const response: any = await this.nodos.getInformacion().toPromise();
 
       Object.keys(response).forEach((k) => {
@@ -114,12 +116,13 @@ export class RealTimePage implements OnInit {
     }
   }
 
-  linealChartMethot() {
+  async linealChartMethot() {
+    await this.share.startLoading();
     this.prepareInfoRows();
 
     if (this.lineChartH) {
       this.lineChartH.clear();
-      //this.lineChartH.destroy();
+      this.lineChartH.destroy();
     }
 
     this.lineChartH = new Chart(this.lineCanvasH.nativeElement, {
@@ -138,7 +141,15 @@ export class RealTimePage implements OnInit {
         } */
       }
     });
+
+    //let chart = document.getElementById('lineChart');
+    //console.log(chart);
+    //chart.style.position = 'relative';
+    //chart.style.height = '54vh';
+    //chart.style.width = '100%';
+
     this.lineChartH.update();
+    this.share.stopLoading();
   }
 
   prepareDataSet() {
@@ -194,7 +205,12 @@ export class RealTimePage implements OnInit {
     ev.target.complete();
   }
 
-  valNumber(number) {
+  ionViewWillLeave(){
+    //pega el código que apaga la gestura está en el login.page.ts
+    this.menu.swipeGesture(false);
+    }
+
+  async valNumber(number) {
     var numbers = /[0-9]/;
     if (!number.target.value) {
       this.share.showToastColor("¡Alerta!", "¡En el campo horas solo se aceptan números!", "w", "s");
@@ -223,6 +239,13 @@ export class RealTimePage implements OnInit {
         number.target.value = this.maxHoras;
       }
     }
-    this.ngOnInit();
+
+    await sessionStorage.setItem('horas', JSON.stringify(number.target.value));
+    console.log(this.router.url);
+
+    //await this.router.navigate(['../' + this.router.url]).then(r => {
+      window.location.replace(this.router.url);
+    //});
+    //this.ngOnInit();
   }
 }

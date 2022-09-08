@@ -526,7 +526,7 @@ export class ReportingPage implements OnInit {
 
 
     /* HUMEDAD DE LA TIERRA */
-    cien = this.share.trunc(100 - this.tot_hum_tierra, 0);
+    cien = this.share.trunc(100 - this.tot_hum_tierra, 2);
     ht = [this.tot_hum_tierra, cien];
 
     /*  case "PH":
@@ -538,7 +538,7 @@ export class ReportingPage implements OnInit {
     ha = [0, this.tot_hum_ambi, 0, 0, 0, cien]; */
 
     /* TEMPERATURA DEL AMBIENTE */
-    cien = this.share.trunc(100 - this.tot_temp_ambi, 0);
+    cien = this.share.trunc(100 - this.tot_temp_ambi, 2);
     ta = [this.tot_temp_ambi, cien];
 
 
@@ -547,7 +547,7 @@ export class ReportingPage implements OnInit {
     la = [0, 0, 0, this.tot_luz_ambi, 0, cien] */
 
     /* PRESION DEL AMBIENTE */
-    cien = this.share.trunc(100 - this.tot_presion, 0);
+    cien = this.share.trunc(100 - this.tot_presion, 2);
     pa = [this.tot_presion, cien]
 
 
@@ -670,16 +670,16 @@ export class ReportingPage implements OnInit {
       }
       if (this.cont > 0) {
         this.tot_hum_tierra /= this.cont;
-        this.tot_hum_tierra = this.share.trunc(this.tot_hum_tierra, 0)
+        this.tot_hum_tierra = this.share.trunc(this.tot_hum_tierra, 2)
         /* this.tot_ph /= this.cont; */
         /* this.tot_hum_ambi /= this.cont;
          this.tot_hum_ambi = this.share.trunc(this.tot_hum_ambi, 0) */
         this.tot_temp_ambi /= this.cont;
-        this.tot_temp_ambi = this.share.trunc(this.tot_temp_ambi, 0)
+        this.tot_temp_ambi = this.share.trunc(this.tot_temp_ambi, 2)
         /* this.tot_luz_ambi /= this.cont;
             this.tot_luz_ambi = this.share.trunc(this.tot_luz_ambi, 0) */
         this.tot_presion /= this.cont;
-        this.tot_presion = this.share.trunc(this.tot_presion, 0)
+        this.tot_presion = this.share.trunc(this.tot_presion, 2)
       }
       this.share.stopLoading();
       this.doughnutChartMethod()
