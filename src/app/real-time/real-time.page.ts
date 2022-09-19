@@ -1,10 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, Platform } from '@ionic/angular';
 import { DataService, tableDataset } from 'src/services/data.service';
 import { Months, nodoServices } from 'src/services/nodoServices';
 import { colorParams, labelsParams, SharedService } from 'src/services/shared.services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Chart } from 'chart.js';
+import { Observable, timer } from 'rxjs';
+import { mergeMap, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-real-time',
@@ -13,20 +15,20 @@ import { Chart } from 'chart.js';
 })
 export class RealTimePage implements OnInit {
 
-  @ViewChild('lineCanvasH') private lineCanvasH: ElementRef;
-  @ViewChild('lineCanvasT') private lineCanvasT: ElementRef;
-  @ViewChild('lineCanvasP') private lineCanvasP: ElementRef;
+  @ViewChild('lineCanvas') private lineCanvas: ElementRef;
+  title = 'Datos en tiempo real';
 
-  lineChartH: any;
-  lineChartT: any;
-  lineChartP: any;
+  lineChart: any;
 
   data = [];
 
   maxHoras = 48;
-  horas = 1;
+  horas = "1";
+  optionsHours = [];
 
+  rowsFilter: any[] = [];
   lastRows: any[] = [];
+
   datesRows: any[] = [];
   hRows: any[] = [];
   tRows: any[] = [];
@@ -34,18 +36,31 @@ export class RealTimePage implements OnInit {
 
   param;
 
-  private type;
+  isDesck = false;
+
+  updateExecute = 0;
+
+  type;
   active = false;
+  executin = 0;
+
+  realTimeExecution;
+  timeExecution = "30";
+
+
+  hoy = this.share.toFormatPoopDate((new Date()).toLocaleDateString());
+  dateFilter = (new Date()).toLocaleDateString();
 
   constructor(
     private menu: MenuController,
     private router: Router,
     private route: ActivatedRoute,
     private share: SharedService,
+    private platform: Platform,
     private nodos: nodoServices,
     private dataActions: DataService
   ) {
-    this.param = this.route.snapshot.paramMap.get("type") ?? 'all';
+    this.param = this.route.snapshot.paramMap.get("type") ?? 'registros';
 
     switch (this.param) {
       case 'humedad':
@@ -57,16 +72,42 @@ export class RealTimePage implements OnInit {
       case 'presion':
         this.type = 'PA'
         break;
-      default:
-        this.type = 'ALL'
+      case 'registros':
+        this.type = 'RE'
         break;
+      default:
+        //this.type = 'ALL'
+        break;
+    }
+
+    for (let plat of platform.platforms()) {
+      if (plat == "desktop")
+        this.isDesck = true;
+      if (plat == 'mobile')
+        this.maxHoras = 12;
     }
   }
 
   async ngOnInit() {
+    this.getMaxHoursOptions();
+    this.menu.swipeGesture(false);
+    await this.share.startLoading();
     await this.getData();
-    this.linealChartMethot();
+    this.share.stopLoading();
+
+    if (this.type != 'RE')
+      this.linealChartMethot();
+
     this.active = true;
+    if (this.type != 'RE')
+      this.executeAsyncTask();
+
+  }
+
+  getMaxHoursOptions() {
+    for (let cont = 0; cont < this.maxHoras; cont++) {
+      this.optionsHours.push((cont + 1));
+    }
   }
 
   toggle() {
@@ -76,34 +117,68 @@ export class RealTimePage implements OnInit {
   async getData() {
     try {
       this.lastRows = [];
-      this.horas = JSON.parse(sessionStorage.getItem('horas')) ?? 1;
-      const response: any = await this.nodos.getInformacion().toPromise();
+      let response: any;
 
-      Object.keys(response).forEach((k) => {
-        let dateRowJson = this.share.jsonDate(response[k].fecha);
-        let dateRow = new Date(dateRowJson.mes + '/' + dateRowJson.dia + '/' + dateRowJson.año + ' ' + response[k].hora);
-        let lastHours = this.share.getLastHours(new Date(), this.horas);
+      
 
-        if (dateRow.getTime() > lastHours.getTime()) {
-          let newEntry = {
-            date: response[k].fecha + ' ' + response[k].hora,
-            hum: response[k].parametros_tierra.HT,
-            tem: response[k].parametros_ambiente.TA,
-            pre: response[k].parametros_ambiente.PA,
+      if (this.type != 'RE') {
+        response = await this.nodos.getInformacion(300).toPromise();
+        Object.keys(response).forEach((k) => {
+          let dateRowJson = this.share.jsonDate(response[k].fecha);
+          let dateRow = new Date(dateRowJson.mes + '/' + dateRowJson.dia + '/' + dateRowJson.año + ' ' + response[k].hora);
+          let lastHours = this.share.getLastHours(new Date(), this.horas);
+
+          if (dateRow.getTime() > lastHours.getTime()) {
+            let newEntry = {
+              date: response[k].fecha + ' ' + response[k].hora,
+              hora: response[k].hora,
+              hum: response[k].parametros_tierra.HT,
+              tem: response[k].parametros_ambiente.TA,
+              pre: response[k].parametros_ambiente.PA,
+            }
+            this.lastRows.push(newEntry);
           }
-          this.lastRows.push(newEntry);
-        }
-      });
+        });
+
+      }
+      else if (this.type == 'RE') {
+        let now = this.share.jsonDate(this.share.getDateNow().fecha);
+        let jsonDate = this.share.jsonDate(this.dateFilter);
+
+        if (now.año == jsonDate.año && now.mes == jsonDate.mes && now.dia == jsonDate.dia)
+          response = await this.nodos.getInformacion(100).toPromise();
+        else
+          response = JSON.parse(sessionStorage.getItem('metricas'));
+
+        Object.keys(response).forEach((k) => {
+          let kDate = this.share.jsonDate(response[k].fecha);
+
+          if (kDate.mes == jsonDate.mes &&
+            kDate.año == jsonDate.año &&
+            kDate.dia == jsonDate.dia
+          ) {
+            let newEntry = {
+              date: response[k].fecha + ' ' + response[k].hora,
+              hora: response[k].hora,
+              hum: this.share.trunc(response[k].parametros_tierra.HT, 0) + '%',
+              tem: this.share.trunc(response[k].parametros_ambiente.TA, 0) + '°C',
+              pre: response[k].parametros_ambiente.PA + ' PSI',
+            }
+            this.lastRows.push(newEntry);
+          }
+        });
+
+      }
     } catch (ex) {
       if (ex.status) {
         this.share.showToastColor('Alerta', 'La sesión a caducado, refresca el token o vuelva a iniciar sesión', 'w', 'm')
         this.router.navigate(['../tabs/profile']).then(r => { });
       }
-
     }
   }
 
   prepareInfoRows() {
+    //this.rowsFilter = [];
     this.datesRows = [];
     this.hRows = [];
     this.tRows = [];
@@ -117,15 +192,9 @@ export class RealTimePage implements OnInit {
   }
 
   async linealChartMethot() {
-    await this.share.startLoading();
     this.prepareInfoRows();
 
-    if (this.lineChartH) {
-      this.lineChartH.clear();
-      this.lineChartH.destroy();
-    }
-
-    this.lineChartH = new Chart(this.lineCanvasH.nativeElement, {
+    this.lineChart = new Chart(this.lineCanvas.nativeElement, {
       type: 'line',
       data: {
         labels: this.datesRows,
@@ -142,14 +211,7 @@ export class RealTimePage implements OnInit {
       }
     });
 
-    //let chart = document.getElementById('lineChart');
-    //console.log(chart);
-    //chart.style.position = 'relative';
-    //chart.style.height = '54vh';
-    //chart.style.width = '100%';
-
-    this.lineChartH.update();
-    this.share.stopLoading();
+    this.lineChart.update();
   }
 
   prepareDataSet() {
@@ -199,53 +261,58 @@ export class RealTimePage implements OnInit {
     return dataSet;
   }
 
-  async doRefresh(ev) {
-    await this.getData();
-    this.linealChartMethot();
-    ev.target.complete();
+  async updateDataChart() {
+    this.updateExecute++;
+    if (this.updateExecute < 2) {
+      await this.getData();
+      if (this.type != 'RE') {
+        this.prepareInfoRows();
+        this.lineChart.data = {
+          labels: this.datesRows,
+          datasets: this.prepareDataSet(),
+        }
+        this.lineChart.update();
+        this.share.stopLoading();
+      }
+    } else
+      this.updateExecute = 0;
   }
 
-  ionViewWillLeave(){
-    //pega el código que apaga la gestura está en el login.page.ts
-    this.menu.swipeGesture(false);
-    }
-
-  async valNumber(number) {
-    var numbers = /[0-9]/;
-    if (!number.target.value) {
-      this.share.showToastColor("¡Alerta!", "¡En el campo horas solo se aceptan números!", "w", "s");
-      number.target.value = 1;
-    }
+  async doRefresh(ev) {
+    if (this.type != 'RE')
+      this.updateDataChart();
     else {
-      let copia = "";
-      for (let x = 0; x < number.target.value.length; x++) {
-        let y = "";
-
-        y = number.target.value[x];
-        console.log(y);
-
-        if (y.match(numbers)) {
-          copia += y;
-        } else {
-          this.share.showToastColor("¡Alerta!", "¡En el campo horas solo se aceptan números!", "w", "s");
-        }
-      }
-
-      number.target.value = copia;
-
-      if (number.target.value > this.maxHoras || number.target.value.length > 3) {
-        number.target.value = number.target.value.substr(0, 3);
-        this.share.showToastColor("¡Alerta!", "El máximo de horas es " + this.maxHoras, "w", "m");
-        number.target.value = this.maxHoras;
-      }
+      await this.share.startLoading();
+      await this.getData();
+      this.share.stopLoading();
     }
+    if (ev.type == 'ionRefresh')
+      ev.target.complete();
+  }
 
-    await sessionStorage.setItem('horas', JSON.stringify(number.target.value));
-    console.log(this.router.url);
+  ionViewWillLeave() {
+    clearInterval(this.realTimeExecution);
+  }
 
-    //await this.router.navigate(['../' + this.router.url]).then(r => {
-      window.location.replace(this.router.url);
-    //});
-    //this.ngOnInit();
+  executeAsyncTask() {
+    clearInterval(this.realTimeExecution);
+    this.realTimeExecution = setInterval(() => { this.executeRealTime() }, Number(this.timeExecution) * 1000);
+  }
+
+  executeRealTime() {
+    console.log("Ha pasado " + (this.timeExecution) + " segundos.", new Date());
+    this.updateDataChart();
+  }
+
+  changeTimeExecution(ev) {
+    this.timeExecution = ev.detail.value;
+    this.executeAsyncTask();
+  }
+
+  async dateStart(value) {
+    this.dateFilter = new Date(value).toLocaleDateString()
+    await this.share.startLoading();
+    await this.getData();
+    this.share.stopLoading();
   }
 }
