@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { PopoverController, ToastController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
@@ -77,18 +77,6 @@ export const regxs = {
   upperLower: /^[A-Za-z0-9 ]+$/,
 };
 
-export var HTTP_OPTIONS_TOKEN_PDF = {
-  headers: new HttpHeaders({
-    Accept: 'application/pdf',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE, PUT',
-    'Access-Control-Allow-Headers':
-      'append,delete,entries,foreach,get,has,keys,set,values,Authorization',
-  }),
-  responseType: 'blob' as 'json',
-};
-
-
 export var HTTP_OPTIONS = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
@@ -96,18 +84,6 @@ export var HTTP_OPTIONS = {
     'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE, PUT',
     'Access-Control-Allow-Headers':
       'append,delete,entries,foreach,get,has,keys,set,values,Authorization',
-  }),
-};
-
-export const HTTP_OPTIONS_VND = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/vnd.api+json',
-  }),
-};
-
-export var HTTP_OPTIONS_MULTIPART = {
-  headers: new HttpHeaders({
-    'Content-Type': 'multipart/form-data',
   }),
 };
 
@@ -127,6 +103,7 @@ export class SharedService {
   questionAlert: any[] = [];
   loading;
   popover;
+  hasNotification: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(
     public toastController: ToastController,
@@ -134,9 +111,7 @@ export class SharedService {
     public alertController: AlertController,
     private router: Router,
     public modalController: ModalController,
-    //private iab: InAppBrowser,
     public popoverController: PopoverController,
-    private _sanitizer: DomSanitizer,
     private afAuth: AngularFireAuth,
   ) { }
 
@@ -163,15 +138,15 @@ export class SharedService {
 
   async startLoading() {
     this.loading = await this.loadingController.create({
-      message: '',
+      message: 'Cargando...',
       translucent: true,
       spinner: 'lines',
     });
-    this.loading.present();
+    await this.loading.present();
   }
 
   async stopLoading() {
-    this.loading.dismiss();
+    await this.loading.dismiss();
   }
 
   closeModal() {
@@ -340,14 +315,6 @@ export class SharedService {
     return edad;
   }
 
-  getNombre(nombreCompleto) {
-    return nombreCompleto.split(' ');
-  }
-
-  toShortTitle(dato) {
-    return dato.substr(0, 25) + '...';
-  }
-
   primeraLetraMayuscula(cadena) {
     const primerCaracter = cadena.charAt(0).toUpperCase();
     const restoDeLaCadena = cadena.substring(1, cadena.length);
@@ -395,10 +362,6 @@ export class SharedService {
     await modal.present();
     const result = await modal.onDidDismiss();
     return result;
-  }
-
-  public htmlProperty(html) {
-    return this._sanitizer.bypassSecurityTrustHtml(html);
   }
 
   encodeInfo(info: any) {
@@ -532,6 +495,15 @@ export class SharedService {
     return date;
   }
 
+  toFormatPoopDate(date) {
+    let f = this.jsonDate(date);
+
+    if ((f.mes + '').length == 2)
+      return f.año + '-' + f.mes + '-' + f.dia
+    else
+      return f.año + '-' + '0' + f.mes + '-' + f.dia
+  }
+
   toShortDate(dato) {
 
     let fecha = dato.substr(0, 10);
@@ -602,7 +574,7 @@ export class SharedService {
   getLastHours(date, horas) {
     var now = new Date();
     var getMinuts = 60 * 60000;
-    var removeHours = getMinuts * horas;
+    var removeHours = getMinuts * Number(horas);
 
     return new Date(now.getTime() - removeHours);
   }

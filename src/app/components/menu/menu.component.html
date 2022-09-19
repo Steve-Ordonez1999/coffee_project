@@ -34,6 +34,14 @@
         </p>
       </ion-item>
 
+      <ion-item button (click)="toggle()" [routerLink]="['../../tabs/real-time/registros']" class="options">
+        <ion-icon slot="start" class="press" name="book-outline"></ion-icon>
+        <ion-icon slot="end" class="red" name="calendar-outline"></ion-icon>
+        <p>
+          REGISTROS
+        </p>
+      </ion-item>
+
       <ion-item button (click)="toggle()" [routerLink]="['../../tabs/reporting']" class="options">
         <ion-icon slot="start" class="earth" name="bar-chart-outline"></ion-icon>
         <ion-icon slot="end" class="press" name="pie-chart-outline"></ion-icon>

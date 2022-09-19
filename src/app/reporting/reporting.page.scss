@@ -20,11 +20,28 @@
 }
 
 .lineChart {
-  position: relative;
-  min-height: 35vh;
-  width: 40vw;
+  padding: 0%;
 }
 
 ion-card {
   min-width: 90%;
+}
+
+ion-item {
+  font-size: 0.9rem;
+  border: 1px gray solid;
+  border-radius: 15px;
+  box-shadow: 0.5px 10px 22px 3px rgba(0, 0, 0, 0.24);
+
+  ion-select {
+    min-width: 50%;
+  }
+}
+
+.refresh {
+  background: white;
+  min-height: 5vh !important;
+  border: 0.5px solid gray;
+  border-radius: 15px;
+  text-align: center;
 }

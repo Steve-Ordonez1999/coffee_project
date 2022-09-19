@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild, OnInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { Chart } from 'chart.js';
@@ -7,6 +7,7 @@ import { labelsParams, PRIORIDAD, SharedService } from 'src/services/shared.serv
 import { SwiperOptions } from 'swiper';
 
 import SwiperCore, { Autoplay, Keyboard, Pagination, Scrollbar, Zoom } from 'swiper';
+
 SwiperCore.use([Autoplay, Keyboard, Pagination, Scrollbar, Zoom]);
 
 
@@ -22,7 +23,7 @@ export class DashboardPage implements OnInit {
     spaceBetween: 50,
     navigation: true,
     autoplay: {
-      delay: 3500,
+      delay: 2500,
       disableOnInteraction: false
     },
     //loop: true,
@@ -63,12 +64,21 @@ export class DashboardPage implements OnInit {
   lineChart: any;
   polarArea: any;
 
+  private isDesk = false;
+
   constructor(
     private nodos: nodoServices,
     private share: SharedService,
     private platform: Platform,
-    private router: Router
+    private router: Router,
+    private platafrom: Platform,
   ) {
+
+    for (let plat of platafrom.platforms()) {
+      if (plat == "desktop")
+        this.isDesk = true;
+    }
+
     this.platform.backButton.subscribeWithPriority(PRIORIDAD, async () => {
       if (this.router.url == '/tabs/dashboard')
         this.share.logout();
@@ -76,8 +86,8 @@ export class DashboardPage implements OnInit {
 
   }
   ngOnInit() {
-  }
 
+  }
 
   // Cuando intentamos llamar a nuestro gráfico para inicializar métodos en ngOnInit(),
   // muestra un error nativeElement de undefined. Por lo tanto, debemos llamar a todos
@@ -106,7 +116,7 @@ export class DashboardPage implements OnInit {
       data: {
         labels: labelsParams,
         datasets: [{
-          label: "Métricas",
+          label: '# of Votes',
           data: newData,
           backgroundColor: [
             'rgba(255, 128, 0, 0.3)',
@@ -124,11 +134,10 @@ export class DashboardPage implements OnInit {
             /* 'rgba(255, 159, 64, 1)', */
             'rgba(20, 143, 119, 1)'
           ],
-          borderWidth: 3,
+          borderWidth: 1
         }]
       },
       options: {
-        indexAxis:'y',
         scales: {
           yAxes: [{
             ticks: {
@@ -171,10 +180,7 @@ export class DashboardPage implements OnInit {
           hoverBackgroundColor: [
             '#ff8000',
             '#c1c1c1',
-          ],
-          hoverBorderColor: 3,
-          borderColor: 1,
-          hoverBorderWidth: 4
+          ]
         }]
       }
     });
@@ -211,10 +217,7 @@ export class DashboardPage implements OnInit {
           hoverBackgroundColor: [
             color_temp[1],
             '#c1c1c1',
-          ],
-          hoverBorderColor: 3,
-          borderColor: 1,
-          hoverBorderWidth: 4
+          ]
         }]
       }
     });
@@ -251,10 +254,7 @@ export class DashboardPage implements OnInit {
           hoverBackgroundColor: [
             '#148F77',
             '#c1c1c1',
-          ],
-          hoverBorderColor: 3,
-          borderColor: 1,
-          hoverBorderWidth: 4
+          ]
         }]
       }
     });
@@ -268,10 +268,7 @@ export class DashboardPage implements OnInit {
         //label: 'My First Dataset',
         data: [this.tot_hum_tierra ?? 0, /* this.tot_ph,  this.tot_hum_ambi ?? 0,*/ this.tot_temp_ambi ?? 0,/* this.tot_luz_ambi ?? 0,*/ this.tot_presion ?? 0],
         backgroundColor: settings.base,
-        hoverBackgroundColor: settings.selected,
-        hoverBorderColor: 3,
-        borderColor: 1,
-        hoverBorderWidth: 4
+        hoverBackgroundColor: settings.selected
       }]
     };
 
@@ -291,12 +288,12 @@ export class DashboardPage implements OnInit {
     try {
       let jsonObj
       if (sessionStorage.getItem('metricas') == null || sessionStorage.getItem('metricas') == '') {
-        const response = await this.nodos.getInformacion().toPromise();
+        const response = await this.nodos.getInformacion(0).toPromise();
         sessionStorage.setItem('metricas', JSON.stringify(response))
-        jsonObj = response;
-      } else {
-        jsonObj = JSON.parse(sessionStorage.getItem('metricas'));
       }
+      const response = await this.nodos.getInformacion(10).toPromise();
+      jsonObj = response
+
       if (jsonObj)
         this.calcularValores(jsonObj);
 
@@ -304,8 +301,8 @@ export class DashboardPage implements OnInit {
       console.log(ex);
       if (ex.status == 401) {
         //this.authServ.onIdTokenRevocation();
-        this.share.showToastColor('Alerta', 'La sesión a caducado, refresca el token o vuelva a iniciar sesión', 'w', 'm')
-        this.router.navigate(['../tabs/profile']).then(r => { });
+        this.share.showToastColor('Alerta', 'La sesión a caducado, vuelva a iniciar sesión', 'w', 'm')
+        this.router.navigate(['/login']).then(r => { });
       }
     }
   }
@@ -348,14 +345,14 @@ export class DashboardPage implements OnInit {
 
         }
         this.tot_hum_tierra /= this.cont;
-        this.tot_hum_tierra = this.share.trunc(this.tot_hum_tierra, 0) ?? 0
+        this.tot_hum_tierra = this.share.trunc(this.tot_hum_tierra, 2) ?? 0
         /* this.tot_ph /= this.cont; */
         this.tot_hum_ambi /= this.cont;
-        this.tot_hum_ambi = this.share.trunc(this.tot_hum_ambi, 0) ?? 0
+        this.tot_hum_ambi = this.share.trunc(this.tot_hum_ambi, 2) ?? 0
         this.tot_temp_ambi /= this.cont;
-        this.tot_temp_ambi = this.share.trunc(this.tot_temp_ambi, 0) ?? 0
+        this.tot_temp_ambi = this.share.trunc(this.tot_temp_ambi, 2) ?? 0
         this.tot_luz_ambi /= this.cont;
-        this.tot_luz_ambi = this.share.trunc(this.tot_luz_ambi, 0) ?? 0
+        this.tot_luz_ambi = this.share.trunc(this.tot_luz_ambi, 2) ?? 0
         this.tot_presion /= this.cont;
         this.tot_presion = this.share.trunc(this.tot_presion, 2) ?? 0
       }
@@ -382,12 +379,9 @@ export class DashboardPage implements OnInit {
   };
 
   async doRefresh(ev) {
-    sessionStorage.removeItem('metricas')
     await this.getData()
     this.barChartMethod();
     this.doughnutChartMethod();
     ev.target.complete();
   }
-
-
 }

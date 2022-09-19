@@ -4,7 +4,7 @@ import { colorParams, labelsParams, SharedService } from 'src/services/shared.se
 import { UserService } from 'src/services/user.service';
 import { Chart } from 'chart.js';
 import { DataService, tableDataset } from 'src/services/data.service';
-import { Platform } from '@ionic/angular';
+import { MenuController, Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { SwiperOptions } from 'swiper';
 
@@ -16,6 +16,7 @@ import { SwiperOptions } from 'swiper';
 export class ReportingPage implements OnInit {
 
   //REPORTES
+  hoy = this.share.toFormatPoopDate((new Date()).toLocaleDateString());
   param = "";
   reportTitle;
   fechaInit
@@ -48,31 +49,22 @@ export class ReportingPage implements OnInit {
   // que hemos agregado al elemento canvas en la plantilla HTML.
   @ViewChild('lineCanvas') private lineCanvas: ElementRef;
   @ViewChild('lineCanvas1') private lineCanvas1: ElementRef;
-  //@ViewChild('lineCanvas2') private lineCanvas2: ElementRef;
   @ViewChild('lineCanvas3') private lineCanvas3: ElementRef;
-  //@ViewChild('lineCanvas4') private lineCanvas4: ElementRef;
   @ViewChild('lineCanvas5') private lineCanvas5: ElementRef;
-  //@ViewChild('lineCanvas6') private lineCanvas6: ElementRef;
 
   @ViewChild('doughnutCanvas') private doughnutCanvas: ElementRef;
   @ViewChild('doughnutCanvas1') private doughnutCanvas1: ElementRef;
-  //@ViewChild('doughnutCanvas2') private doughnutCanvas2: ElementRef;
   @ViewChild('doughnutCanvas3') private doughnutCanvas3: ElementRef;
-  //@ViewChild('doughnutCanvas4') private doughnutCanvas4: ElementRef;
   @ViewChild('doughnutCanvas5') private doughnutCanvas5: ElementRef;
 
   lineChart: any;
   lineChart1: any;
-  //lineChart2: any;
   lineChart3: any;
-  //lineChart4: any;
   lineChart5: any;
 
   doughnutChart: any;
   doughnutChart1: any;
-  //doughnutChart2: any;
   doughnutChart3: any;
-  //doughnutChart4: any;
   doughnutChart5: any;
 
   config: SwiperOptions = {
@@ -89,13 +81,13 @@ export class ReportingPage implements OnInit {
 
   constructor(
     private nodos: nodoServices,
+    private menu: MenuController,
     private authServ: UserService,
     private share: SharedService,
     private dataActions: DataService,
     private platafrom: Platform,
     private router: Router
   ) {
-    console.log(platafrom.platforms());
 
     for (let plat of platafrom.platforms()) {
       if (plat == "desktop")
@@ -106,6 +98,10 @@ export class ReportingPage implements OnInit {
   ngOnInit() {
   }
 
+  toggle() {
+    this.menu.toggle();
+  }
+
   async ionViewWillEnter() {
     await this.getData();
   }
@@ -113,7 +109,7 @@ export class ReportingPage implements OnInit {
   async getData() {
     try {
       if (sessionStorage.getItem('metricas') == null || sessionStorage.getItem('metricas') == '') {
-        const response = await this.nodos.getInformacion().toPromise();
+        const response = await this.nodos.getInformacion(0).toPromise();
         sessionStorage.setItem('metricas', JSON.stringify(response))
 
         this.jsonObj = response;
@@ -131,15 +127,14 @@ export class ReportingPage implements OnInit {
   }
 
   selectedAnio(anio) {
-    if (anio != "") {
-      this.anio = anio;
+    if (anio.detail.value != "") {
+      this.anio = anio.detail.value;
       this.showLine = false;
       this.calcularValoresAnio();
     }
     else {
       this.showReportInfo = true;
     }
-    //this.show = true;
   }
 
   cleanOldData() {
@@ -346,17 +341,6 @@ export class ReportingPage implements OnInit {
     });
     this.lineChart1.update();
 
-
-    /* this.lineChart2 = new Chart(this.lineCanvas2.nativeElement, {
-       type: 'line',
-       data: {
-         labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-         datasets: this.prepareDataLine(this.meses, "HA"),
-       }
-     });
-     this.lineChart2.update();*/
-
-
     this.lineChart3 = new Chart(this.lineCanvas3.nativeElement, {
       type: 'line',
       data: {
@@ -365,17 +349,6 @@ export class ReportingPage implements OnInit {
       }
     });
     this.lineChart3.update();
-
-
-    /* this.lineChart4 = new Chart(this.lineCanvas4.nativeElement, {
-       type: 'line',
-       data: {
-         labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-         datasets: this.prepareDataLine(this.meses, "LA"),
-       }
-     });
-     this.lineChart4.update();*/
-
 
     this.lineChart5 = new Chart(this.lineCanvas5.nativeElement, {
       type: 'line',
@@ -426,9 +399,6 @@ export class ReportingPage implements OnInit {
       //usuario: json.usuario,
       FECHA_HORA: json.fecha + ' ' + json.hora ?? 'No hour',
       HUMEDAD: this.share.trunc(json.parametros_tierra.HT, 0),
-      /* PH_tierra: json.parametros_tierra.PH, */
-      /*Humedad_ambiente: json.parametros_ambiente.HA,*/
-      /*Luz_ambiente: json.parametros_ambiente.LA,*/
       TEMPERATURA: this.share.trunc(json.parametros_ambiente.TA, 0),
       PRESIÓN: json.parametros_ambiente.PA,
     };
@@ -466,12 +436,12 @@ export class ReportingPage implements OnInit {
     await this.share.startLoading();
     this.showReportInfo = true;
     this.showReport = [false, false, false, false];
-    this.reportTitle = value;
+    this.reportTitle = value.detail.value;
     this.fechaInit = "";
     this.fechaFin = "";
     this.factor = "";
 
-    switch (value) {
+    switch (value.detail.value) {
       case 'Rango':
         this.showReport[0] = true;
         this.active = false;
@@ -492,7 +462,6 @@ export class ReportingPage implements OnInit {
         this.showReportInfo = true;
         this.active = true;
     }
-
     this.share.stopLoading();
   }
 
@@ -506,9 +475,7 @@ export class ReportingPage implements OnInit {
     this.showReportInfo = false;
     this.doughnutChart = null;
     this.doughnutChart1 = null;
-    //this.doughnutChart2 = null;
     this.doughnutChart3 = null;
-    //this.doughnutChart4 = null;
     this.doughnutChart5 = null;
     let cien;
     /* TODOS LOS PARÁMETROS */
@@ -519,9 +486,7 @@ export class ReportingPage implements OnInit {
       allData = [0, 0, 0, 100]
     }
     let ht: number[];
-    //let ha: number[];
     let ta: number[];
-    //let la: number[];
     let pa: number[];
 
 
@@ -529,22 +494,9 @@ export class ReportingPage implements OnInit {
     cien = this.share.trunc(100 - this.tot_hum_tierra, 2);
     ht = [this.tot_hum_tierra, cien];
 
-    /*  case "PH":
-        cien = 100 - this.tot_ph
-       break; */
-
-    /* HUMEDAD DEL AMBIENTE */
-    /* cien = this.share.trunc(100 - this.tot_hum_ambi, 0);
-    ha = [0, this.tot_hum_ambi, 0, 0, 0, cien]; */
-
     /* TEMPERATURA DEL AMBIENTE */
     cien = this.share.trunc(100 - this.tot_temp_ambi, 2);
     ta = [this.tot_temp_ambi, cien];
-
-
-    /* LUZ DEL AMBIENTE */
-    /* cien = this.share.trunc(100 - this.tot_luz_ambi, 0);
-    la = [0, 0, 0, this.tot_luz_ambi, 0, cien] */
 
     /* PRESION DEL AMBIENTE */
     cien = this.share.trunc(100 - this.tot_presion, 2);
@@ -592,19 +544,6 @@ export class ReportingPage implements OnInit {
       }
     });
 
-    /* this.doughnutChart2 = new Chart(this.doughnutCanvas2.nativeElement, {
-      type: 'doughnut',
-      data: {
-        //labels: colors.labels,
-        datasets: [{
-          label: '# of Votes',
-          data: ha,
-          backgroundColor: colors.base,
-          hoverBackgroundColor: colors.selected
-        }]
-      }
-    }); */
-
     colors = this.share.getColorsParams('TA', this.tot_temp_ambi);
     this.doughnutChart3 = new Chart(this.doughnutCanvas3.nativeElement, {
       type: 'doughnut',
@@ -621,19 +560,6 @@ export class ReportingPage implements OnInit {
         }]
       }
     });
-
-    /* this.doughnutChart4 = new Chart(this.doughnutCanvas4.nativeElement, {
-      type: 'doughnut',
-      data: {
-        //labels: colors.labels,
-        datasets: [{
-          label: '# of Votes',
-          data: la,
-          backgroundColor: colors.base,
-          hoverBackgroundColor: colors.selected
-        }]
-      }
-    }); */
 
     colors = this.share.getColorsParams('PA', 0);
     this.doughnutChart5 = new Chart(this.doughnutCanvas5.nativeElement, {
@@ -662,24 +588,16 @@ export class ReportingPage implements OnInit {
         let typeParams = key;
 
         this.tot_hum_tierra += parseFloat(typeParams.parametros_tierra.HT ?? 0);
-        /*  this.tot_ph += parseFloat(typeParams.parametros_tierra.PH?? 0); */
-        //this.tot_hum_ambi += parseFloat(typeParams.parametros_ambiente.HA ?? 0);
         this.tot_temp_ambi += parseFloat(typeParams.parametros_ambiente.TA ?? 0);
-        //this.tot_luz_ambi += parseFloat(typeParams.parametros_ambiente.LA ?? 0);
         this.tot_presion += parseFloat(typeParams.parametros_ambiente.PA ?? 0);
       }
       if (this.cont > 0) {
         this.tot_hum_tierra /= this.cont;
-        this.tot_hum_tierra = this.share.trunc(this.tot_hum_tierra, 2)
-        /* this.tot_ph /= this.cont; */
-        /* this.tot_hum_ambi /= this.cont;
-         this.tot_hum_ambi = this.share.trunc(this.tot_hum_ambi, 0) */
+        this.tot_hum_tierra = this.share.trunc(this.tot_hum_tierra, 2);
         this.tot_temp_ambi /= this.cont;
-        this.tot_temp_ambi = this.share.trunc(this.tot_temp_ambi, 2)
-        /* this.tot_luz_ambi /= this.cont;
-            this.tot_luz_ambi = this.share.trunc(this.tot_luz_ambi, 0) */
+        this.tot_temp_ambi = this.share.trunc(this.tot_temp_ambi, 2);
         this.tot_presion /= this.cont;
-        this.tot_presion = this.share.trunc(this.tot_presion, 2)
+        this.tot_presion = this.share.trunc(this.tot_presion, 2);
       }
       this.share.stopLoading();
       this.doughnutChartMethod()
@@ -698,9 +616,6 @@ export class ReportingPage implements OnInit {
     for (var mes = 1; mes <= 12; mes++) {
       let month: Months = {
         HT: 0,
-        PH: 0,
-        HA: 0,
-        LA: 0,
         TA: 0,
         PA: 0,
       }
@@ -713,10 +628,7 @@ export class ReportingPage implements OnInit {
             this.filtro.push(this.jsonObj[key]);
             this.cont++;
             month.HT += parseFloat(typeParams.parametros_tierra.HT ?? 0);
-            //month.tot_ph += parseFloat(typeParams.parametros_tierra.PH);
-            month.HA += parseFloat(typeParams.parametros_ambiente.HA ?? 0);
             month.TA += parseFloat(typeParams.parametros_ambiente.TA ?? 0);
-            month.LA += parseFloat(typeParams.parametros_ambiente.LA ?? 0);
             month.PA += parseFloat(typeParams.parametros_ambiente.PA ?? 0);
 
           }
@@ -726,8 +638,6 @@ export class ReportingPage implements OnInit {
         this.cont = 1;
 
       month.HT /= this.cont;
-      //month.HA /= this.cont;
-      //month.LA /= this.cont;
       month.TA /= this.cont;
       month.PA /= this.cont;
 

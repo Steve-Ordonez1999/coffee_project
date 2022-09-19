@@ -4,11 +4,12 @@
     background-image: url("../../assets/backs/bg_splash_screen.png");
 }
 
-
 .menu-back {
     background: var(--ion-card-background, var(--ion-item-background, var(--ion-background-color, #fff)));
+    //color: var(--ion-card-background, var(--ion-item-background, var(--ion-background-color, #fff)));
+    border-radius: 15px;
+    border: 1px black;
 }
-
 
 .chart {
     position: relative;
@@ -16,7 +17,8 @@
     width: 40vw;
 }
 
-.icon {
+.options {
+    --background: black;
     //color: blue;
 }
 
@@ -27,4 +29,61 @@
     border: 0.5px solid gray;
     border-radius: 15px;
     text-align: center;
+}
+
+ion-grid.desk {
+    .row1 {
+        //border-radius: 15px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        border-left: 1px gray solid;
+        border-right: 1px gray solid;
+        border-top: 1px gray solid;
+    }
+
+    .row2 {
+        border-bottom: 1px gray solid;
+        border-left: 1px gray solid;
+        border-right: 1px gray solid;
+        border-bottom-left-radius: 15px;
+        border-top: 1px gray solid;
+        border-bottom-right-radius: 15px;
+    }
+}
+
+ion-grid.cell {
+    ion-row {
+        border-radius: 15px;
+        border: 1px gray solid;
+    }
+}
+
+ion-grid.rows {
+    overflow: scroll;
+}
+
+.rows,
+.rows-content {
+    min-height: 68VH;
+    max-height: 68VH;
+}
+
+ion-select {
+    padding: 1%;
+}
+
+ion-input {
+    --padding-top: 1%;
+    --padding-bottom: 1%;
+}
+
+ion-item {
+    font-size: 0.9rem;
+    border: 1px gray solid;
+    border-radius: 15px;
+    box-shadow: 0.5px 10px 22px 3px rgba(0, 0, 0, 0.24);
+
+    ion-select {
+        min-width: 50%;
+    }
 }
