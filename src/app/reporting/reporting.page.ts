@@ -273,7 +273,7 @@ export class ReportingPage implements OnInit {
             pointHoverBackgroundColor: colorParams[p].selected,
             pointHoverBorderColor: 'rgba(220,220,220,1)',
             pointHoverBorderWidth: 2,
-            pointRadius: 1,
+            pointRadius: 4,
             pointHitRadius: 10,
             data: this.dataListParam(meses, p),
             spanGaps: false,
@@ -308,7 +308,7 @@ export class ReportingPage implements OnInit {
         pointHoverBackgroundColor: colorParams[p].selected,
         pointHoverBorderColor: 'rgba(220,220,220,1)',
         pointHoverBorderWidth: 2,
-        pointRadius: 1,
+        pointRadius: 4,
         pointHitRadius: 10,
         data: mesParam,
         spanGaps: false,
@@ -642,6 +642,7 @@ export class ReportingPage implements OnInit {
       month.PA /= this.cont;
 
       this.meses.push(month);
+      this.cont=0;
     }
 
     this.lineChartMethod();

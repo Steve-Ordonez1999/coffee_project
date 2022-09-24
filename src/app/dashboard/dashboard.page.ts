@@ -180,7 +180,10 @@ export class DashboardPage implements OnInit {
           hoverBackgroundColor: [
             '#ff8000',
             '#c1c1c1',
-          ]
+          ],
+          hoverBorderColor: 3,
+          borderColor: 1,
+          hoverBorderWidth: 4
         }]
       }
     });
@@ -217,7 +220,10 @@ export class DashboardPage implements OnInit {
           hoverBackgroundColor: [
             color_temp[1],
             '#c1c1c1',
-          ]
+          ],
+          hoverBorderColor: 3,
+          borderColor: 1,
+          hoverBorderWidth: 4
         }]
       }
     });
@@ -254,7 +260,10 @@ export class DashboardPage implements OnInit {
           hoverBackgroundColor: [
             '#148F77',
             '#c1c1c1',
-          ]
+          ],
+          hoverBorderColor: 3,
+          borderColor: 1,
+          hoverBorderWidth: 4
         }]
       }
     });
@@ -268,7 +277,10 @@ export class DashboardPage implements OnInit {
         //label: 'My First Dataset',
         data: [this.tot_hum_tierra ?? 0, /* this.tot_ph,  this.tot_hum_ambi ?? 0,*/ this.tot_temp_ambi ?? 0,/* this.tot_luz_ambi ?? 0,*/ this.tot_presion ?? 0],
         backgroundColor: settings.base,
-        hoverBackgroundColor: settings.selected
+        hoverBackgroundColor: settings.selected,
+        hoverBorderColor: 3,
+        borderColor: 1,
+        hoverBorderWidth: 4
       }]
     };
 
