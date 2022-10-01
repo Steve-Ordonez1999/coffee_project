@@ -81,8 +81,8 @@
         </ion-item>
       </ion-col>
       <ion-col size="4" [hidden]="!showReport[2]">
-        <ion-item button="true" [disabled]="active">
-          <ion-label class="label" id="open-date-day-desk">Día </ion-label>
+        <ion-item button="true" id="open-date-day-desk" [disabled]="active">
+          <ion-label class="label" >Día </ion-label>
           <ion-text slot="end">{{ fechaInit }}</ion-text>
           <ion-popover trigger="open-date-day-desk" show-backdrop="false">
             <ng-template>
@@ -117,7 +117,8 @@
       </ion-col>
       <ion-col size="6">
         <ion-item button="true">
-          <ion-select trigger="open-select-desk" placeholder="Selecione Uno" (ionChange)="selectReport($event)">
+          <ion-select style="min-width: 100%;" trigger="open-select-desk" placeholder="Selecione Uno"
+            (ionChange)="selectReport($event)">
             <ion-select-option value="">Seleccione</ion-select-option>
             <ion-select-option value="Rango">Rango</ion-select-option>
             <ion-select-option value="Hasta">Hasta</ion-select-option>
@@ -190,7 +191,8 @@
       <!-- SELECT YEAR REPORT -->
       <ion-col size="12" [hidden]="!showReport[3]">
         <ion-item button="true">
-          <ion-select placeholder="Selecione Uno" (ionChange)="selectedAnio($event)" [disabled]="active">
+          <ion-select style="min-width: 100%;" placeholder="Selecione Uno" (ionChange)="selectedAnio($event)"
+            [disabled]="active">
             <ion-select-option value="">Seleccione</ion-select-option>
             <ion-select-option value="2022">2022</ion-select-option>
             <!-- <ion-select-option value="2023">2023</ion-select-option> -->

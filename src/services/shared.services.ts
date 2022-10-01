@@ -498,10 +498,18 @@ export class SharedService {
   toFormatPoopDate(date) {
     let f = this.jsonDate(date);
 
-    if ((f.mes + '').length == 2)
-      return f.año + '-' + f.mes + '-' + f.dia
-    else
-      return f.año + '-' + '0' + f.mes + '-' + f.dia
+  if ((f.mes + '').length == 2 ){
+    if((f.dia + '').length == 2){
+      return f.año + '-' + f.mes + '-'+ f.dia
+  }else{
+      return f.año + '-' + f.mes + '-' + '0' + f.dia}
+  }else{
+    if((f.dia + '').length == 2){
+      return f.año + '-' + '0' + f.mes + '-'+ f.dia
+  }else{
+      return f.año + '-' + '0' +  f.mes + '-' + '0' + f.dia}
+  }
+     
   }
 
   toShortDate(dato) {
